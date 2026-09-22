@@ -1,0 +1,13 @@
+{
+  "$schema": "https://react.doctor/schema/config.json",
+  "ignore": {
+    "files": ["src/components/ui/**", "src/db/seed/**"],
+    "rules": [
+      "react-doctor/no-giant-component",
+      "react-hooks-js/set-state-in-effect",
+      "react-doctor/nextjs-no-side-effect-in-get-handler",
+      "react-doctor/server-auth-actions",
+      "react-doctor/no-high-complexity-react-function"
+    ]
+  }
+}

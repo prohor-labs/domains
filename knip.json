@@ -1,0 +1,27 @@
+{
+  "$schema": "https://unpkg.com/knip@5/overview/config-schema.json",
+  "entry": [
+    "next.config.{js,ts,cjs,mjs}",
+    "src/app/**/*.{js,jsx,ts,tsx}"
+  ],
+  "project": ["src/**/*.{ts,tsx}!"],
+  "ignore": [
+    "src/components/ui/**",
+    "src/hooks/use-mobile.ts"
+  ],
+  "ignoreDependencies": [
+    "@shadcn/react",
+    "cmdk",
+    "embla-carousel-react",
+    "input-otp",
+    "next-themes",
+    "react-day-picker",
+    "react-resizable-panels",
+    "recharts",
+    "shadcn",
+    "sonner",
+    "tw-animate-css",
+    "tailwindcss"
+  ],
+  "ignoreExportsUsedInFile": true
+}
