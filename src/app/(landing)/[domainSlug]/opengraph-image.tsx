@@ -46,11 +46,11 @@ export default async function OGImage({
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          backgroundColor: "#0c0a09",
-          backgroundImage: "radial-gradient(circle at 50% 0%, #292524 0%, #0c0a09 70%)",
-          color: "#fafaf9",
-          padding: "60px 70px",
-          fontFamily: "sans-serif",
+          backgroundColor: "#181715",
+          backgroundImage: "radial-gradient(circle at 50% 0%, #252320 0%, #181715 75%)",
+          color: "#faf9f5",
+          padding: "60px 72px",
+          fontFamily: "serif",
         }}
       >
         <div
@@ -65,34 +65,36 @@ export default async function OGImage({
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "12px",
+              gap: "10px",
             }}
           >
-            <div
-              style={{
-                width: "36px",
-                height: "36px",
-                borderRadius: "10px",
-                backgroundColor: "#dc2626",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "20px",
-                fontWeight: "bold",
-                color: "#ffffff",
-              }}
+            <svg
+              viewBox="0 0 1155 1000"
+              width="28"
+              height="24"
+              fill="#cc785c"
             >
-              P
-            </div>
+              <path d="m577.3 0 577.4 1000H0z" />
+            </svg>
             <span
               style={{
                 fontSize: "24px",
-                fontWeight: "600",
-                letterSpacing: "-0.02em",
-                color: "#f5f5f4",
+                color: "rgba(230, 223, 216, 0.4)",
+                fontWeight: "300",
+                fontFamily: "sans-serif",
               }}
             >
-              Prohor Domains
+              \
+            </span>
+            <span
+              style={{
+                fontSize: "26px",
+                fontWeight: "500",
+                color: "#faf9f5",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              .dev
             </span>
           </div>
 
@@ -101,30 +103,31 @@ export default async function OGImage({
               display: "flex",
               alignItems: "center",
               gap: "8px",
-              backgroundColor: isAvailable ? "rgba(16, 185, 129, 0.15)" : "rgba(120, 113, 108, 0.2)",
-              border: `1px solid ${isAvailable ? "rgba(16, 185, 129, 0.4)" : "rgba(120, 113, 108, 0.4)"}`,
+              backgroundColor: isAvailable ? "rgba(93, 184, 114, 0.15)" : "#252320",
+              border: `1px solid ${isAvailable ? "rgba(93, 184, 114, 0.4)" : "#3d3d3a"}`,
               padding: "8px 18px",
               borderRadius: "9999px",
+              fontFamily: "sans-serif",
             }}
           >
             <div
               style={{
-                width: "10px",
-                height: "10px",
+                width: "9px",
+                height: "9px",
                 borderRadius: "9999px",
-                backgroundColor: isAvailable ? "#10b981" : "#a8a29e",
+                backgroundColor: isAvailable ? "#5db872" : "#8e8b82",
               }}
             />
             <span
               style={{
-                fontSize: "16px",
+                fontSize: "14px",
                 fontWeight: "600",
-                color: isAvailable ? "#34d399" : "#d6d3d1",
+                color: isAvailable ? "#5db872" : "#a09d96",
                 textTransform: "uppercase",
-                letterSpacing: "0.05em",
+                letterSpacing: "0.06em",
               }}
             >
-              {isAvailable ? "Available for Registration" : "Registered Domain"}
+              {isAvailable ? "Available for Registration" : "Currently Registered"}
             </span>
           </div>
         </div>
@@ -140,46 +143,64 @@ export default async function OGImage({
             style={{
               display: "flex",
               alignItems: "baseline",
-              fontSize: "76px",
+              fontSize: "80px",
               fontWeight: "400",
               letterSpacing: "-0.03em",
-              color: "#fafaf9",
-              lineHeight: 1.1,
+              color: "#faf9f5",
+              lineHeight: 1.05,
             }}
           >
             <span>{sld}</span>
-            <span style={{ color: "#ea580c" }}>.{tld}</span>
+            <span style={{ color: "#cc785c" }}>.{tld}</span>
           </div>
 
           {isAvailable ? (
             <div
               style={{
                 display: "flex",
-                alignItems: "baseline",
-                gap: "12px",
-                fontSize: "36px",
-                fontWeight: "500",
-                color: "#f5f5f4",
+                flexDirection: "column",
+                gap: "8px",
               }}
             >
-              <span>${priceUsd.toFixed(2)} USD</span>
-              <span style={{ fontSize: "24px", color: "#a8a29e" }}>
-                (৳{priceBdt.toLocaleString()} BDT) / year
-              </span>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "baseline",
+                  gap: "14px",
+                  fontSize: "38px",
+                  fontWeight: "400",
+                  color: "#faf9f5",
+                }}
+              >
+                <span>${priceUsd.toFixed(2)} USD</span>
+                <span style={{ fontSize: "24px", color: "#a09d96", fontFamily: "sans-serif" }}>
+                  (৳{priceBdt.toLocaleString()} BDT) / yr
+                </span>
+              </div>
+              <div
+                style={{
+                  fontSize: "18px",
+                  color: "#a09d96",
+                  fontFamily: "sans-serif",
+                }}
+              >
+                Pay & forget — your domain, our responsibility.
+              </div>
             </div>
           ) : (
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "16px",
+                gap: "14px",
                 fontSize: "22px",
-                color: "#a8a29e",
+                color: "#a09d96",
+                fontFamily: "sans-serif",
               }}
             >
               <span>Registrar: {registrar}</span>
               <span>-</span>
-              <span>Live DNS & WHOIS Records</span>
+              <span>Live WHOIS & DNS Intelligence</span>
             </div>
           )}
         </div>
@@ -189,18 +210,21 @@ export default async function OGImage({
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            borderTop: "1px solid rgba(120, 113, 108, 0.3)",
+            borderTop: "1px solid rgba(230, 223, 216, 0.15)",
             paddingTop: "24px",
-            fontSize: "16px",
-            color: "#78716c",
+            fontSize: "15px",
+            color: "#8e8b82",
+            fontFamily: "sans-serif",
           }}
         >
-          <div style={{ display: "flex", gap: "24px" }}>
+          <div style={{ display: "flex", gap: "28px" }}>
             <span>Free WHOIS Privacy</span>
-            <span>Instant Setup</span>
+            <span>-</span>
+            <span>Managed DNS</span>
+            <span>-</span>
             <span>Dual USD & BDT Checkout</span>
           </div>
-          <span style={{ fontWeight: "600", color: "#a8a29e" }}>domains.prohor.dev</span>
+          <span style={{ fontWeight: "600", color: "#e8e0d2" }}>domains.prohor.dev</span>
         </div>
       </div>
     ),

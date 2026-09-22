@@ -1,7 +1,7 @@
 "use server";
 
 import { POPULAR_TLDS, TLD_DIRECTORY } from "@/lib/constants/tlds";
-import type { DomainDetail, DomainSearchResponse, DomainSearchResult, TldPriceInfo } from "@/lib/types/domain";
+import type { DomainDetail, DomainSearchResponse, DomainSearchResult } from "@/lib/types/domain";
 import { applyPlatformFee } from "@/lib/utils/pricing";
 
 const VERCEL_SEARCH_ENDPOINT = "https://api.vercel.com/v1/registrar/domains/search";
@@ -335,19 +335,4 @@ export async function getDomainDetailsAction(rawDomain: string): Promise<DomainD
       soaRecord,
     },
   };
-}
-
-export async function getTldPricingAction(tld?: string): Promise<TldPriceInfo[]> {
-  const directory = TLD_DIRECTORY.map((item) => ({
-    ...item,
-    registrationPrice: applyPlatformFee(item.registrationPrice),
-    renewalPrice: applyPlatformFee(item.renewalPrice),
-    transferPrice: item.transferPrice ? applyPlatformFee(item.transferPrice) : undefined,
-  }));
-
-  if (tld) {
-    const cleanTld = tld.toLowerCase().replace(/^\./, "");
-    return directory.filter((item) => item.tld === cleanTld);
-  }
-  return directory;
 }

@@ -19,11 +19,11 @@ export default async function RootOGImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          backgroundColor: "#0c0a09",
-          backgroundImage: "radial-gradient(circle at 50% 0%, #292524 0%, #0c0a09 70%)",
-          color: "#fafaf9",
-          padding: "60px 70px",
-          fontFamily: "sans-serif",
+          backgroundColor: "#181715",
+          backgroundImage: "radial-gradient(circle at 50% 0%, #252320 0%, #181715 75%)",
+          color: "#faf9f5",
+          padding: "60px 72px",
+          fontFamily: "serif",
         }}
       >
         <div
@@ -38,80 +38,101 @@ export default async function RootOGImage() {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "12px",
+              gap: "10px",
             }}
           >
-            <div
+            <svg
+              viewBox="0 0 1155 1000"
+              width="28"
+              height="24"
+              fill="#cc785c"
+            >
+              <path d="m577.3 0 577.4 1000H0z" />
+            </svg>
+            <span
               style={{
-                width: "40px",
-                height: "40px",
-                borderRadius: "10px",
-                backgroundColor: "#dc2626",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "22px",
-                fontWeight: "bold",
-                color: "#ffffff",
+                fontSize: "24px",
+                color: "rgba(230, 223, 216, 0.4)",
+                fontWeight: "300",
+                fontFamily: "sans-serif",
               }}
             >
-              P
-            </div>
+              \
+            </span>
             <span
               style={{
                 fontSize: "26px",
-                fontWeight: "600",
+                fontWeight: "500",
+                color: "#faf9f5",
                 letterSpacing: "-0.02em",
-                color: "#f5f5f4",
               }}
             >
-              Prohor Domains
+              .dev
             </span>
           </div>
 
-          <span
+          <div
             style={{
-              fontSize: "15px",
-              fontWeight: "500",
-              color: "#a8a29e",
-              backgroundColor: "rgba(120, 113, 108, 0.2)",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              backgroundColor: "#252320",
+              border: "1px solid #3d3d3a",
               padding: "6px 16px",
               borderRadius: "9999px",
-              border: "1px solid rgba(120, 113, 108, 0.4)",
+              fontFamily: "sans-serif",
             }}
           >
-            Domain Intelligence Platform
-          </span>
+            <span
+              style={{
+                fontSize: "13px",
+                fontWeight: "500",
+                color: "#a09d96",
+                letterSpacing: "0.02em",
+              }}
+            >
+              domains.prohor.dev
+            </span>
+          </div>
         </div>
 
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            gap: "14px",
+            gap: "18px",
           }}
         >
           <div
             style={{
-              fontSize: "64px",
-              fontWeight: "600",
+              display: "flex",
+              flexDirection: "column",
+              fontSize: "62px",
+              fontWeight: "400",
               letterSpacing: "-0.03em",
-              color: "#fafaf9",
+              color: "#faf9f5",
               lineHeight: 1.1,
             }}
           >
-            Buy domains with ease.
+            <span>
+              Buy domains with ease<span style={{ color: "#cc785c" }}>.</span>
+            </span>
+            <span style={{ color: "#e8e0d2" }}>
+              <span style={{ fontStyle: "italic", color: "#cc785c" }}>Pay & forget</span>, your domain our responsibility.
+            </span>
           </div>
 
           <div
             style={{
-              fontSize: "28px",
-              color: "#a8a29e",
+              fontSize: "22px",
+              color: "#a09d96",
               fontWeight: "400",
-              maxWidth: "800px",
+              fontFamily: "sans-serif",
+              lineHeight: 1.4,
+              maxWidth: "880px",
             }}
           >
-            Pay & forget — your domain, our responsibility. Instant search, live availability, and dual USD & BDT checkout.
+            Instant availability checks, transparent pricing in USD ($) and BDT (৳), free WHOIS privacy, and automatic DNS routing.
           </div>
         </div>
 
@@ -120,18 +141,21 @@ export default async function RootOGImage() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            borderTop: "1px solid rgba(120, 113, 108, 0.3)",
+            borderTop: "1px solid rgba(230, 223, 216, 0.15)",
             paddingTop: "24px",
-            fontSize: "16px",
-            color: "#78716c",
+            fontSize: "15px",
+            color: "#8e8b82",
+            fontFamily: "sans-serif",
           }}
         >
-          <div style={{ display: "flex", gap: "24px" }}>
-            <span>Live Availability</span>
+          <div style={{ display: "flex", gap: "28px" }}>
+            <span>Instant Search</span>
+            <span>-</span>
             <span>Free WHOIS Privacy</span>
+            <span>-</span>
             <span>Dual USD & BDT Checkout</span>
           </div>
-          <span style={{ fontWeight: "600", color: "#a8a29e" }}>domains.prohor.dev</span>
+          <span style={{ fontWeight: "600", color: "#e8e0d2" }}>Prohor Domains</span>
         </div>
       </div>
     ),

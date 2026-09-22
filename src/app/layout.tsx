@@ -59,8 +59,8 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: "/favicon.ico",
-    shortcut: "/icons/vercel.svg",
-    apple: "/icons/vercel.svg",
+    shortcut: "/vercel.svg",
+    apple: "/vercel.svg",
   },
   openGraph: {
     type: "website",
