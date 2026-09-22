@@ -35,11 +35,12 @@ export default async function OGImage({
   } catch {
   }
 
-  const [newsreaderNormal, newsreaderItalic, interNormal, interSemiBold] = await Promise.all([
+  const [newsreaderNormal, newsreaderItalic, interNormal, interSemiBold, notoBengaliNormal] = await Promise.all([
     readFile(join(process.cwd(), "node_modules/@fontsource/newsreader/files/newsreader-latin-400-normal.woff")),
     readFile(join(process.cwd(), "node_modules/@fontsource/newsreader/files/newsreader-latin-400-italic.woff")),
     readFile(join(process.cwd(), "node_modules/@fontsource/inter/files/inter-latin-400-normal.woff")),
     readFile(join(process.cwd(), "node_modules/@fontsource/inter/files/inter-latin-600-normal.woff")),
+    readFile(join(process.cwd(), "node_modules/@fontsource/noto-sans-bengali/files/noto-sans-bengali-bengali-400-normal.woff")),
   ]);
 
   const parts = cleanDomain.split(".");
@@ -254,6 +255,12 @@ export default async function OGImage({
           name: "Inter",
           data: interSemiBold,
           weight: 600,
+          style: "normal",
+        },
+        {
+          name: "Noto Sans Bengali",
+          data: notoBengaliNormal,
+          weight: 400,
           style: "normal",
         },
       ],

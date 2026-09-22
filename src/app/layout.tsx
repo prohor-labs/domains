@@ -1,27 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Newsreader, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { QueryProvider } from "@/lib/query/provider";
 import { ThemeProvider } from "@/components/shared/theme-provider";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
-
-const newsreader = Newsreader({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  style: ["normal", "italic"],
-  variable: "--font-serif",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-});
 
 export const viewport: Viewport = {
   themeColor: [
@@ -58,15 +40,18 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/vercel.svg",
-    apple: "/vercel.svg",
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "32x32" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
+  manifest: "/site.webmanifest",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://domains.prohor.dev",
-    siteName: "Prohor",
+    siteName: "Prohor Domains",
     title: "Buy Domains with Ease | Pay & Forget",
     description:
       "Buy domains with ease. Pay and forget — your domain, our responsibility. Instant domain search, live availability, and wholesale pricing in USD & BDT.",
@@ -75,8 +60,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Buy Domains with Ease | Pay & Forget",
     description:
-      "Buy domains with ease. Pay and forget — your domain, our responsibility. Instant domain search and transparent pricing.",
-    creator: "@frostfoe",
+      "Buy domains with ease. Pay and forget — your domain, our responsibility. Instant domain search, live availability, and wholesale pricing in USD & BDT.",
   },
   robots: {
     index: true,
@@ -103,9 +87,6 @@ export default function RootLayout({
       className={cn(
         "h-full",
         "antialiased",
-        inter.variable,
-        newsreader.variable,
-        jetbrainsMono.variable,
         "font-sans"
       )}
     >

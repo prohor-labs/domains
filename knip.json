@@ -10,6 +10,7 @@
     "src/hooks/use-mobile.ts"
   ],
   "ignoreDependencies": [
+    "@fontsource/**",
     "@shadcn/react",
     "cmdk",
     "embla-carousel-react",
