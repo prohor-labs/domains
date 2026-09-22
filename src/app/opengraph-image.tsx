@@ -63,7 +63,7 @@ export default async function RootOGImage() {
         backgroundImage:
           "radial-gradient(circle at 50% 0%, #252320 0%, #181715 75%)",
         color: "#faf9f5",
-        padding: "60px 72px",
+        padding: "64px 80px",
         fontFamily: "Newsreader",
       }}
     >
@@ -71,120 +71,76 @@ export default async function RootOGImage() {
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
-          width: "100%",
+          gap: "14px",
         }}
       >
-        <div
+        <svg viewBox="0 0 1155 1000" width="36" height="32">
+          <polygon points="577.5,0 1155,1000 0,1000" fill="#cc785c" />
+        </svg>
+        <span
           style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "12px",
-          }}
-        >
-          <svg viewBox="0 0 1155 1000" width="32" height="28">
-            <polygon points="577.5,0 1155,1000 0,1000" fill="#cc785c" />
-          </svg>
-          <span
-            style={{
-              fontSize: "28px",
-              color: "rgba(230, 223, 216, 0.5)",
-              fontWeight: 300,
-              fontFamily: "Inter",
-              lineHeight: "1",
-            }}
-          >
-            \
-          </span>
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "8px",
-            backgroundColor: "#252320",
-            border: "1px solid #3d3d3a",
-            padding: "6px 16px",
-            borderRadius: "9999px",
+            fontSize: "32px",
+            color: "rgba(230, 223, 216, 0.5)",
+            fontWeight: 300,
             fontFamily: "Inter",
+            lineHeight: "1",
           }}
         >
-          <span
-            style={{
-              fontSize: "13px",
-              fontWeight: 600,
-              color: "#a09d96",
-              letterSpacing: "0.02em",
-            }}
-          >
-            domains.prohor.dev
-          </span>
-        </div>
+          \
+        </span>
       </div>
 
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "18px",
+          gap: "24px",
+          marginBottom: "40px",
         }}
       >
         <div
           style={{
             display: "flex",
-            flexDirection: "column",
-            fontSize: "68px",
+            alignItems: "center",
+            fontSize: "76px",
             fontWeight: 400,
             letterSpacing: "-0.03em",
             color: "#faf9f5",
-            lineHeight: 1.1,
+            lineHeight: 1.25,
             fontFamily: "Newsreader",
           }}
         >
-          <span>
-            Buy domains with ease<span style={{ color: "#cc785c" }}>.</span>
-          </span>
-          <span style={{ color: "#e8e0d2" }}>
-            <span style={{ fontStyle: "italic", color: "#cc785c" }}>
-              Pay & forget
-            </span>
-            , your domain our responsibility.
-          </span>
+          <span>Buy domains with ease</span>
+          <span style={{ color: "#cc785c" }}>.</span>
         </div>
 
         <div
           style={{
-            fontSize: "22px",
-            color: "#a09d96",
+            display: "flex",
+            alignItems: "center",
+            fontSize: "58px",
             fontWeight: 400,
-            fontFamily: "Inter",
-            lineHeight: 1.45,
-            maxWidth: "880px",
+            letterSpacing: "-0.02em",
+            color: "#e8e0d2",
+            lineHeight: 1.25,
+            fontFamily: "Newsreader",
           }}
         >
-          Instant domain availability checking, transparent pricing in USD ($)
-          and BDT (৳130/$), WHOIS intelligence, and automated DNS routing.
+          <span style={{ fontStyle: "italic", color: "#cc785c", marginRight: "14px" }}>
+            Pay & forget
+          </span>
+          <span>, your domain our responsibility.</span>
         </div>
       </div>
 
       <div
         style={{
           display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          borderTop: "1px solid rgba(230, 223, 216, 0.15)",
-          paddingTop: "24px",
-          fontSize: "15px",
-          color: "#8e8b82",
-          fontFamily: "Inter",
+          width: "100%",
+          height: "1px",
+          backgroundColor: "rgba(230, 223, 216, 0.12)",
         }}
-      >
-        <span style={{ fontWeight: 600, color: "#e8e0d2" }}>
-          Prohor Domains
-        </span>
-        <span style={{ color: "#a09d96" }}>domains.prohor.dev</span>
-      </div>
+      />
     </div>,
     {
       ...size,
