@@ -1,13 +1,25 @@
 "use server";
 
 import { POPULAR_TLDS, TLD_DIRECTORY } from "@/lib/constants/tlds";
-import type { DomainDetail, DomainSearchResponse, DomainSearchResult } from "@/lib/types/domain";
+import type {
+  DomainDetail,
+  DomainSearchResponse,
+  DomainSearchResult,
+} from "@/lib/types/domain";
 import { applyPlatformFee } from "@/lib/utils/pricing";
 
-const VERCEL_SEARCH_ENDPOINT = "https://api.vercel.com/v1/registrar/domains/search";
+const VERCEL_SEARCH_ENDPOINT =
+  "https://api.vercel.com/v1/registrar/domains/search";
 
-function parseDomainParts(input: string): { sld: string; extension: string | null } {
-  const cleaned = input.toLowerCase().trim().replace(/^https?:\/\//, "").replace(/\/.*$/, "");
+function parseDomainParts(input: string): {
+  sld: string;
+  extension: string | null;
+} {
+  const cleaned = input
+    .toLowerCase()
+    .trim()
+    .replace(/^https?:\/\//, "")
+    .replace(/\/.*$/, "");
   const parts = cleaned.split(".");
   if (parts.length > 1) {
     const sld = parts[0];
@@ -17,7 +29,10 @@ function parseDomainParts(input: string): { sld: string; extension: string | nul
   return { sld: cleaned, extension: null };
 }
 
-function sortSearchResults(results: DomainSearchResult[], exactQuery?: string): DomainSearchResult[] {
+function sortSearchResults(
+  results: DomainSearchResult[],
+  exactQuery?: string,
+): DomainSearchResult[] {
   return [...results].sort((a, b) => {
     if (exactQuery && exactQuery.includes(".")) {
       const isExactA = a.domain.toLowerCase() === exactQuery.toLowerCase();
@@ -35,7 +50,7 @@ function sortSearchResults(results: DomainSearchResult[], exactQuery?: string): 
 
 export async function searchDomainsAction(
   query: string,
-  customTlds?: string[]
+  customTlds?: string[],
 ): Promise<DomainSearchResponse> {
   const trimmed = query.trim().toLowerCase();
   if (!trimmed) {
@@ -43,11 +58,15 @@ export async function searchDomainsAction(
   }
 
   const { sld, extension } = parseDomainParts(trimmed);
-  const tldList = customTlds && customTlds.length > 0
-    ? customTlds
-    : extension
-    ? [extension, ...POPULAR_TLDS.filter((t) => t !== extension).slice(0, 7)]
-    : [...POPULAR_TLDS];
+  const tldList =
+    customTlds && customTlds.length > 0
+      ? customTlds
+      : extension
+        ? [
+            extension,
+            ...POPULAR_TLDS.filter((t) => t !== extension).slice(0, 7),
+          ]
+        : [...POPULAR_TLDS];
 
   const domainsToSearch = tldList.map((tld) => `${sld}.${tld}`);
   const token = process.env.VERCEL_BEARER_TOKEN;
@@ -67,30 +86,34 @@ export async function searchDomainsAction(
       if (res.ok) {
         const data = await res.json();
         if (data && Array.isArray(data.results)) {
-          const results: DomainSearchResult[] = data.results.map((item: {
-            domain: string;
-            available: boolean;
-            years?: number;
-            price?: number;
-            renewalPrice?: number;
-            premium?: boolean;
-          }) => ({
-            domain: item.domain,
-            available: Boolean(item.available),
-            years: item.years ?? 1,
-            price: item.price ? applyPlatformFee(item.price) : undefined,
-            renewalPrice: item.renewalPrice
-              ? applyPlatformFee(item.renewalPrice)
-              : item.price
-              ? applyPlatformFee(item.price)
-              : undefined,
-            premium: Boolean(item.premium),
-          }));
-          return { query: trimmed, results: sortSearchResults(results, trimmed) };
+          const results: DomainSearchResult[] = data.results.map(
+            (item: {
+              domain: string;
+              available: boolean;
+              years?: number;
+              price?: number;
+              renewalPrice?: number;
+              premium?: boolean;
+            }) => ({
+              domain: item.domain,
+              available: Boolean(item.available),
+              years: item.years ?? 1,
+              price: item.price ? applyPlatformFee(item.price) : undefined,
+              renewalPrice: item.renewalPrice
+                ? applyPlatformFee(item.renewalPrice)
+                : item.price
+                  ? applyPlatformFee(item.price)
+                  : undefined,
+              premium: Boolean(item.premium),
+            }),
+          );
+          return {
+            query: trimmed,
+            results: sortSearchResults(results, trimmed),
+          };
         }
       }
-    } catch {
-    }
+    } catch {}
   }
 
   const fallbackResults: DomainSearchResult[] = await Promise.all(
@@ -106,11 +129,15 @@ export async function searchDomainsAction(
           {
             headers: { Accept: "application/dns-json" },
             next: { revalidate: 300 },
-          }
+          },
         );
         if (dohRes.ok) {
           const dohData = await dohRes.json();
-          if (dohData.Status === 0 && dohData.Answer && dohData.Answer.length > 0) {
+          if (
+            dohData.Status === 0 &&
+            dohData.Answer &&
+            dohData.Answer.length > 0
+          ) {
             available = false;
           }
         }
@@ -129,14 +156,23 @@ export async function searchDomainsAction(
         renewalPrice: applyPlatformFee(rawRenewal),
         premium: false,
       };
-    })
+    }),
   );
 
-  return { query: trimmed, results: sortSearchResults(fallbackResults, trimmed) };
+  return {
+    query: trimmed,
+    results: sortSearchResults(fallbackResults, trimmed),
+  };
 }
 
-export async function getDomainDetailsAction(rawDomain: string): Promise<DomainDetail> {
-  const domain = rawDomain.toLowerCase().trim().replace(/^https?:\/\//, "").replace(/\/.*$/, "");
+export async function getDomainDetailsAction(
+  rawDomain: string,
+): Promise<DomainDetail> {
+  const domain = rawDomain
+    .toLowerCase()
+    .trim()
+    .replace(/^https?:\/\//, "")
+    .replace(/\/.*$/, "");
   const parts = domain.split(".");
   const sld = parts[0] || "";
   const tld = parts.slice(1).join(".") || "com";
@@ -169,44 +205,57 @@ export async function getDomainDetailsAction(rawDomain: string): Promise<DomainD
 
   if (!matched.available) {
     try {
-      const [aRes, aaaaRes, cnameRes, nsRes, mxRes, txtRes, soaRes, rdapRes] = await Promise.allSettled([
-        fetch(`https://cloudflare-dns.com/dns-query?name=${domain}&type=A`, {
-          headers: { Accept: "application/dns-json" },
-          next: { revalidate: 300 },
-        }),
-        fetch(`https://cloudflare-dns.com/dns-query?name=${domain}&type=AAAA`, {
-          headers: { Accept: "application/dns-json" },
-          next: { revalidate: 300 },
-        }),
-        fetch(`https://cloudflare-dns.com/dns-query?name=${domain}&type=CNAME`, {
-          headers: { Accept: "application/dns-json" },
-          next: { revalidate: 300 },
-        }),
-        fetch(`https://cloudflare-dns.com/dns-query?name=${domain}&type=NS`, {
-          headers: { Accept: "application/dns-json" },
-          next: { revalidate: 300 },
-        }),
-        fetch(`https://cloudflare-dns.com/dns-query?name=${domain}&type=MX`, {
-          headers: { Accept: "application/dns-json" },
-          next: { revalidate: 300 },
-        }),
-        fetch(`https://cloudflare-dns.com/dns-query?name=${domain}&type=TXT`, {
-          headers: { Accept: "application/dns-json" },
-          next: { revalidate: 300 },
-        }),
-        fetch(`https://cloudflare-dns.com/dns-query?name=${domain}&type=SOA`, {
-          headers: { Accept: "application/dns-json" },
-          next: { revalidate: 300 },
-        }),
-        fetch(`https://rdap.org/domain/${domain}`, {
-          headers: {
-            "User-Agent": "Mozilla/5.0 (compatible; ProhorBot/1.0)",
-            Accept: "application/rdap+json, application/json",
-          },
-          redirect: "follow",
-          next: { revalidate: 300 },
-        }),
-      ]);
+      const [aRes, aaaaRes, cnameRes, nsRes, mxRes, txtRes, soaRes, rdapRes] =
+        await Promise.allSettled([
+          fetch(`https://cloudflare-dns.com/dns-query?name=${domain}&type=A`, {
+            headers: { Accept: "application/dns-json" },
+            next: { revalidate: 300 },
+          }),
+          fetch(
+            `https://cloudflare-dns.com/dns-query?name=${domain}&type=AAAA`,
+            {
+              headers: { Accept: "application/dns-json" },
+              next: { revalidate: 300 },
+            },
+          ),
+          fetch(
+            `https://cloudflare-dns.com/dns-query?name=${domain}&type=CNAME`,
+            {
+              headers: { Accept: "application/dns-json" },
+              next: { revalidate: 300 },
+            },
+          ),
+          fetch(`https://cloudflare-dns.com/dns-query?name=${domain}&type=NS`, {
+            headers: { Accept: "application/dns-json" },
+            next: { revalidate: 300 },
+          }),
+          fetch(`https://cloudflare-dns.com/dns-query?name=${domain}&type=MX`, {
+            headers: { Accept: "application/dns-json" },
+            next: { revalidate: 300 },
+          }),
+          fetch(
+            `https://cloudflare-dns.com/dns-query?name=${domain}&type=TXT`,
+            {
+              headers: { Accept: "application/dns-json" },
+              next: { revalidate: 300 },
+            },
+          ),
+          fetch(
+            `https://cloudflare-dns.com/dns-query?name=${domain}&type=SOA`,
+            {
+              headers: { Accept: "application/dns-json" },
+              next: { revalidate: 300 },
+            },
+          ),
+          fetch(`https://rdap.org/domain/${domain}`, {
+            headers: {
+              "User-Agent": "Mozilla/5.0 (compatible; ProhorBot/1.0)",
+              Accept: "application/rdap+json, application/json",
+            },
+            redirect: "follow",
+            next: { revalidate: 300 },
+          }),
+        ]);
 
       if (aRes.status === "fulfilled" && aRes.value.ok) {
         const d = await aRes.value.json();
@@ -272,7 +321,10 @@ export async function getDomainDetailsAction(rawDomain: string): Promise<DomainD
       if (rdapRes.status === "fulfilled" && rdapRes.value.ok) {
         const rdapData = await rdapRes.value.json();
         for (const ent of rdapData.entities || []) {
-          if (ent.roles?.includes("registrar") || ent.roles?.includes("reseller")) {
+          if (
+            ent.roles?.includes("registrar") ||
+            ent.roles?.includes("reseller")
+          ) {
             const vcard = ent.vcardArray?.[1] || [];
             const fn = vcard.find((v: string[]) => v[0] === "fn")?.[3];
             if (fn) rdapRegistrar = fn;
@@ -289,9 +341,18 @@ export async function getDomainDetailsAction(rawDomain: string): Promise<DomainD
         }
 
         const events = rdapData.events || [];
-        rdapCreatedDate = events.find((e: { eventAction: string; eventDate: string }) => e.eventAction === "registration")?.eventDate;
-        rdapExpiredDate = events.find((e: { eventAction: string; eventDate: string }) => e.eventAction === "expiration")?.eventDate;
-        rdapUpdatedDate = events.find((e: { eventAction: string; eventDate: string }) => e.eventAction === "last changed")?.eventDate;
+        rdapCreatedDate = events.find(
+          (e: { eventAction: string; eventDate: string }) =>
+            e.eventAction === "registration",
+        )?.eventDate;
+        rdapExpiredDate = events.find(
+          (e: { eventAction: string; eventDate: string }) =>
+            e.eventAction === "expiration",
+        )?.eventDate;
+        rdapUpdatedDate = events.find(
+          (e: { eventAction: string; eventDate: string }) =>
+            e.eventAction === "last changed",
+        )?.eventDate;
         rdapStatus = rdapData.status || [];
         rdapDnssec = Boolean(rdapData.secureDNS?.delegationSigned);
 
@@ -301,8 +362,7 @@ export async function getDomainDetailsAction(rawDomain: string): Promise<DomainD
           }
         }
       }
-    } catch {
-    }
+    } catch {}
   }
 
   return {
@@ -315,13 +375,19 @@ export async function getDomainDetailsAction(rawDomain: string): Promise<DomainD
     premium: matched.premium,
     years: matched.years ?? 1,
     whois: {
-      registrar: rdapRegistrar || (matched.available ? undefined : "Registered"),
+      registrar:
+        rdapRegistrar || (matched.available ? undefined : "Registered"),
       abuseEmail: rdapAbuseEmail,
       abusePhone: rdapAbusePhone,
       createdDate: rdapCreatedDate,
       expiredDate: rdapExpiredDate,
       updatedDate: rdapUpdatedDate,
-      status: rdapStatus.length > 0 ? rdapStatus : matched.available ? ["AVAILABLE"] : ["active"],
+      status:
+        rdapStatus.length > 0
+          ? rdapStatus
+          : matched.available
+            ? ["AVAILABLE"]
+            : ["active"],
       nameServers: nsRecords.length > 0 ? nsRecords : undefined,
       dnssec: rdapDnssec,
     },

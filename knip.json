@@ -1,16 +1,13 @@
 {
   "$schema": "https://unpkg.com/knip@5/overview/config-schema.json",
-  "entry": [
-    "next.config.{js,ts,cjs,mjs}",
-    "src/app/**/*.{js,jsx,ts,tsx}"
-  ],
+  "entry": ["next.config.{js,ts,cjs,mjs}", "src/app/**/*.{js,jsx,ts,tsx}"],
   "project": ["src/**/*.{ts,tsx}!"],
-  "ignore": [
-    "src/components/ui/**",
-    "src/hooks/use-mobile.ts"
-  ],
+  "ignore": ["src/components/ui/**", "src/hooks/use-mobile.ts"],
   "ignoreDependencies": [
-    "@fontsource/**",
+    "@fontsource/inter",
+    "@fontsource/jetbrains-mono",
+    "@fontsource/newsreader",
+    "@fontsource/noto-sans-bengali",
     "@shadcn/react",
     "cmdk",
     "embla-carousel-react",

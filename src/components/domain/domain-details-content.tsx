@@ -2,9 +2,19 @@
 
 import { useDomainDetails } from "@/hooks/use-domain-details";
 import { cn } from "@/lib/utils";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/components/ui/empty";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
@@ -57,7 +67,9 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
       <Empty className="mx-auto max-w-3xl py-20 border border-dashed border-border">
         <EmptyHeader>
           <EmptyTitle>Unable to load domain details</EmptyTitle>
-          <EmptyDescription>Please check the domain name format and try again.</EmptyDescription>
+          <EmptyDescription>
+            Please check the domain name format and try again.
+          </EmptyDescription>
         </EmptyHeader>
         <Button
           render={<Link href="/search" />}
@@ -88,7 +100,9 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
               <span
                 className={cn(
                   "size-2.5 rounded-full",
-                  detail.available ? "bg-emerald-500" : "bg-muted-foreground/60"
+                  detail.available
+                    ? "bg-emerald-500"
+                    : "bg-muted-foreground/60",
                 )}
               />
               <span className="text-xs font-medium text-foreground">
@@ -122,7 +136,8 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
                 </div>
                 {detail.renewalPrice && (
                   <p className="text-xs text-muted-foreground">
-                    Renews at ${detail.renewalPrice.toFixed(2)}/yr (৳{toBdt(detail.renewalPrice).toLocaleString()})
+                    Renews at ${detail.renewalPrice.toFixed(2)}/yr (৳
+                    {toBdt(detail.renewalPrice).toLocaleString()})
                   </p>
                 )}
               </div>
@@ -136,8 +151,12 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
           <div className="md:col-span-2 flex flex-col gap-6">
             <Card className="p-6">
               <CardHeader className="p-0 pb-4">
-                <CardTitle className="font-serif text-xl">Order Summary</CardTitle>
-                <CardDescription>Domain registration duration and included protections.</CardDescription>
+                <CardTitle className="font-serif text-xl">
+                  Order Summary
+                </CardTitle>
+                <CardDescription>
+                  Domain registration duration and included protections.
+                </CardDescription>
               </CardHeader>
               <Separator className="mb-4" />
 
@@ -148,7 +167,8 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
                       {cleanDomain}
                     </span>
                     <p className="text-xs text-muted-foreground mt-0.5">
-                      First-year registration: ${basePrice.toFixed(2)} / ৳{toBdt(basePrice).toLocaleString()}
+                      First-year registration: ${basePrice.toFixed(2)} / ৳
+                      {toBdt(basePrice).toLocaleString()}
                     </p>
                   </div>
                   <div className="text-right">
@@ -169,7 +189,8 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
                       Registration Term
                     </span>
                     <p className="text-xs text-muted-foreground">
-                      Subsequent renewal at ${renewalPrice.toFixed(2)}/yr (৳{toBdt(renewalPrice).toLocaleString()}/yr)
+                      Subsequent renewal at ${renewalPrice.toFixed(2)}/yr (৳
+                      {toBdt(renewalPrice).toLocaleString()}/yr)
                     </p>
                   </div>
 
@@ -184,23 +205,41 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <HugeiconsIcon icon={Shield01Icon} strokeWidth={1.5} className="size-4 text-emerald-500" />
+                    <HugeiconsIcon
+                      icon={Shield01Icon}
+                      strokeWidth={1.5}
+                      className="size-4 text-emerald-500"
+                    />
                     <div>
-                      <span className="text-sm font-medium text-foreground block">WHOIS Privacy Protection</span>
-                      <p className="text-xs text-muted-foreground">Redacts registrant contact records automatically</p>
+                      <span className="text-sm font-medium text-foreground block">
+                        WHOIS Privacy Protection
+                      </span>
+                      <p className="text-xs text-muted-foreground">
+                        Redacts registrant contact records automatically
+                      </p>
                     </div>
                   </div>
-                  <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">Free</span>
+                  <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">
+                    Free
+                  </span>
                 </div>
               </div>
             </Card>
 
             <Card className="p-6 bg-card/40">
               <div className="flex items-start gap-3">
-                <HugeiconsIcon icon={LockIcon} strokeWidth={1.5} className="size-5 text-primary shrink-0 mt-0.5" />
+                <HugeiconsIcon
+                  icon={LockIcon}
+                  strokeWidth={1.5}
+                  className="size-5 text-primary shrink-0 mt-0.5"
+                />
                 <div className="text-xs text-muted-foreground leading-relaxed">
-                  <span className="font-medium text-foreground block mb-0.5">Direct Telegram Concierge</span>
-                  Clicking order dispatch opens a direct chat with <strong>@frostfoe</strong> on Telegram pre-filled with your domain configuration for swift manual processing.
+                  <span className="font-medium text-foreground block mb-0.5">
+                    Direct Telegram Concierge
+                  </span>
+                  Clicking order dispatch opens a direct chat with{" "}
+                  <strong>@frostfoe</strong> on Telegram pre-filled with your
+                  domain configuration for swift manual processing.
                 </div>
               </div>
             </Card>
@@ -216,7 +255,10 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
               <div className="flex flex-col gap-3">
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                   <span>Domain ({cleanDomain})</span>
-                  <span>${basePrice.toFixed(2)} (৳{toBdt(basePrice).toLocaleString()})</span>
+                  <span>
+                    ${basePrice.toFixed(2)} (৳
+                    {toBdt(basePrice).toLocaleString()})
+                  </span>
                 </div>
 
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
@@ -227,7 +269,9 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
                 <Separator className="my-2" />
 
                 <div className="flex items-baseline justify-between">
-                  <span className="font-serif text-base text-foreground">Total</span>
+                  <span className="font-serif text-base text-foreground">
+                    Total
+                  </span>
                   <div className="text-right">
                     <span className="font-serif text-3xl font-normal text-foreground">
                       ${totalPriceUsd.toFixed(2)}
@@ -253,7 +297,11 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
                   className="w-full mt-4 font-medium"
                 >
                   Send Order on Telegram
-                  <HugeiconsIcon icon={SentIcon} strokeWidth={2} data-icon="inline-end" />
+                  <HugeiconsIcon
+                    icon={SentIcon}
+                    strokeWidth={2}
+                    data-icon="inline-end"
+                  />
                 </Button>
 
                 <p className="text-[11px] text-center text-muted-foreground mt-1">
@@ -270,12 +318,18 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
           <Card className="bg-card p-6 shadow-xs">
             <div className="flex items-center justify-between pb-4 border-b border-border">
               <div className="flex items-center gap-2">
-                <HugeiconsIcon icon={Building01Icon} strokeWidth={1.5} className="size-4 text-primary" />
+                <HugeiconsIcon
+                  icon={Building01Icon}
+                  strokeWidth={1.5}
+                  className="size-4 text-primary"
+                />
                 <h2 className="font-mono text-sm font-medium text-foreground">
                   WHOIS
                 </h2>
               </div>
-              <span className="font-mono text-[11px] text-muted-foreground">RDAP</span>
+              <span className="font-mono text-[11px] text-muted-foreground">
+                RDAP
+              </span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 pt-5 text-xs">
@@ -290,7 +344,11 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
 
               <div className="flex flex-col gap-1">
                 <span className="text-[11px] uppercase tracking-wider text-muted-foreground flex items-center gap-1">
-                  <HugeiconsIcon icon={Calendar03Icon} strokeWidth={1.5} className="size-3.5" />
+                  <HugeiconsIcon
+                    icon={Calendar03Icon}
+                    strokeWidth={1.5}
+                    className="size-3.5"
+                  />
                   Registered
                 </span>
                 <span className="font-medium text-foreground text-sm">
@@ -300,7 +358,11 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
 
               <div className="flex flex-col gap-1">
                 <span className="text-[11px] uppercase tracking-wider text-muted-foreground flex items-center gap-1">
-                  <HugeiconsIcon icon={Calendar03Icon} strokeWidth={1.5} className="size-3.5" />
+                  <HugeiconsIcon
+                    icon={Calendar03Icon}
+                    strokeWidth={1.5}
+                    className="size-3.5"
+                  />
                   Expires
                 </span>
                 <span className="font-medium text-foreground text-sm">
@@ -322,7 +384,11 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
               <div className="mt-5 pt-4 border-t border-border flex flex-wrap items-center gap-6 text-xs text-muted-foreground">
                 {detail.whois.abuseEmail && (
                   <div className="flex items-center gap-1.5">
-                    <HugeiconsIcon icon={Mail01Icon} strokeWidth={1.5} className="size-3.5" />
+                    <HugeiconsIcon
+                      icon={Mail01Icon}
+                      strokeWidth={1.5}
+                      className="size-3.5"
+                    />
                     <span>Abuse: {detail.whois.abuseEmail}</span>
                   </div>
                 )}
@@ -341,7 +407,11 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {detail.whois.status.map((st) => (
-                    <Badge key={st} variant="secondary" className="font-mono text-[10px] px-2 py-0.5">
+                    <Badge
+                      key={st}
+                      variant="secondary"
+                      className="font-mono text-[10px] px-2 py-0.5"
+                    >
                       {st}
                     </Badge>
                   ))}
@@ -354,12 +424,18 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
             <Card className="bg-card p-6 shadow-xs">
               <div className="flex items-center justify-between pb-4 border-b border-border">
                 <div className="flex items-center gap-2">
-                  <HugeiconsIcon icon={ServerIcon} strokeWidth={1.5} className="size-4 text-primary" />
+                  <HugeiconsIcon
+                    icon={ServerIcon}
+                    strokeWidth={1.5}
+                    className="size-4 text-primary"
+                  />
                   <h2 className="font-mono text-sm font-medium text-foreground">
                     DNS Records
                   </h2>
                 </div>
-                <span className="font-mono text-[11px] text-muted-foreground">DoH</span>
+                <span className="font-mono text-[11px] text-muted-foreground">
+                  DoH
+                </span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-5 font-mono text-xs">
@@ -370,14 +446,21 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
                   {detail.dns.nsRecords && detail.dns.nsRecords.length > 0 ? (
                     <ul className="flex flex-col gap-1.5 text-foreground">
                       {detail.dns.nsRecords.map((ns) => (
-                        <li key={ns} className="rounded-lg bg-background px-3 py-1.5 text-xs break-all border border-border flex items-center justify-between">
+                        <li
+                          key={ns}
+                          className="rounded-lg bg-background px-3 py-1.5 text-xs break-all border border-border flex items-center justify-between"
+                        >
                           <span>{ns}</span>
-                          <span className="text-[10px] text-muted-foreground">NS</span>
+                          <span className="text-[10px] text-muted-foreground">
+                            NS
+                          </span>
                         </li>
                       ))}
                     </ul>
                   ) : (
-                    <p className="text-muted-foreground">No active NS records found</p>
+                    <p className="text-muted-foreground">
+                      No active NS records found
+                    </p>
                   )}
                 </div>
 
@@ -388,9 +471,14 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
                   {detail.dns.aRecords && detail.dns.aRecords.length > 0 ? (
                     <ul className="flex flex-col gap-1.5 text-foreground">
                       {detail.dns.aRecords.map((ip) => (
-                        <li key={ip} className="rounded-lg bg-background px-3 py-1.5 text-xs break-all border border-border flex items-center justify-between">
+                        <li
+                          key={ip}
+                          className="rounded-lg bg-background px-3 py-1.5 text-xs break-all border border-border flex items-center justify-between"
+                        >
                           <span>{ip}</span>
-                          <span className="text-[10px] text-muted-foreground">A</span>
+                          <span className="text-[10px] text-muted-foreground">
+                            A
+                          </span>
                         </li>
                       ))}
                     </ul>
@@ -399,21 +487,27 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
                   )}
                 </div>
 
-                {detail.dns.aaaaRecords && detail.dns.aaaaRecords.length > 0 && (
-                  <div>
-                    <span className="text-muted-foreground uppercase text-[10px] tracking-wider block mb-2">
-                      AAAA Records (IPv6)
-                    </span>
-                    <ul className="flex flex-col gap-1.5 text-foreground">
-                      {detail.dns.aaaaRecords.map((ip6) => (
-                        <li key={ip6} className="rounded-lg bg-background px-3 py-1.5 text-xs break-all border border-border flex items-center justify-between">
-                          <span>{ip6}</span>
-                          <span className="text-[10px] text-muted-foreground">AAAA</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                {detail.dns.aaaaRecords &&
+                  detail.dns.aaaaRecords.length > 0 && (
+                    <div>
+                      <span className="text-muted-foreground uppercase text-[10px] tracking-wider block mb-2">
+                        AAAA Records (IPv6)
+                      </span>
+                      <ul className="flex flex-col gap-1.5 text-foreground">
+                        {detail.dns.aaaaRecords.map((ip6) => (
+                          <li
+                            key={ip6}
+                            className="rounded-lg bg-background px-3 py-1.5 text-xs break-all border border-border flex items-center justify-between"
+                          >
+                            <span>{ip6}</span>
+                            <span className="text-[10px] text-muted-foreground">
+                              AAAA
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
                 {detail.dns.mxRecords && detail.dns.mxRecords.length > 0 && (
                   <div>
@@ -422,30 +516,41 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
                     </span>
                     <ul className="flex flex-col gap-1.5 text-foreground">
                       {detail.dns.mxRecords.map((mx) => (
-                        <li key={mx} className="rounded-lg bg-background px-3 py-1.5 text-xs break-all border border-border flex items-center justify-between">
+                        <li
+                          key={mx}
+                          className="rounded-lg bg-background px-3 py-1.5 text-xs break-all border border-border flex items-center justify-between"
+                        >
                           <span>{mx}</span>
-                          <span className="text-[10px] text-muted-foreground">MX</span>
+                          <span className="text-[10px] text-muted-foreground">
+                            MX
+                          </span>
                         </li>
                       ))}
                     </ul>
                   </div>
                 )}
 
-                {detail.dns.cnameRecords && detail.dns.cnameRecords.length > 0 && (
-                  <div>
-                    <span className="text-muted-foreground uppercase text-[10px] tracking-wider block mb-2">
-                      CNAME Records
-                    </span>
-                    <ul className="flex flex-col gap-1.5 text-foreground">
-                      {detail.dns.cnameRecords.map((cname) => (
-                        <li key={cname} className="rounded-lg bg-background px-3 py-1.5 text-xs break-all border border-border flex items-center justify-between">
-                          <span>{cname}</span>
-                          <span className="text-[10px] text-muted-foreground">CNAME</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                {detail.dns.cnameRecords &&
+                  detail.dns.cnameRecords.length > 0 && (
+                    <div>
+                      <span className="text-muted-foreground uppercase text-[10px] tracking-wider block mb-2">
+                        CNAME Records
+                      </span>
+                      <ul className="flex flex-col gap-1.5 text-foreground">
+                        {detail.dns.cnameRecords.map((cname) => (
+                          <li
+                            key={cname}
+                            className="rounded-lg bg-background px-3 py-1.5 text-xs break-all border border-border flex items-center justify-between"
+                          >
+                            <span>{cname}</span>
+                            <span className="text-[10px] text-muted-foreground">
+                              CNAME
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
                 {detail.dns.txtRecords && detail.dns.txtRecords.length > 0 && (
                   <div className="md:col-span-2">
@@ -454,7 +559,10 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
                     </span>
                     <ul className="flex flex-col gap-1.5 text-foreground">
                       {detail.dns.txtRecords.map((txt, idx) => (
-                        <li key={idx} className="rounded-lg bg-background px-3 py-1.5 text-[11px] break-all border border-border">
+                        <li
+                          key={idx}
+                          className="rounded-lg bg-background px-3 py-1.5 text-[11px] break-all border border-border"
+                        >
                           {txt}
                         </li>
                       ))}

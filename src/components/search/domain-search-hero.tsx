@@ -57,7 +57,11 @@ export function DomainSearchHero({
       <form onSubmit={handleSearch} className="w-full">
         <InputGroup className="h-12 bg-background p-1 shadow-2xs">
           <InputGroupAddon align="inline-start" className="pl-3.5">
-            <HugeiconsIcon icon={Search01Icon} strokeWidth={1.5} className="size-4.5 text-muted-foreground" />
+            <HugeiconsIcon
+              icon={Search01Icon}
+              strokeWidth={1.5}
+              className="size-4.5 text-muted-foreground"
+            />
           </InputGroupAddon>
           <InputGroupInput
             type="text"
@@ -67,9 +71,18 @@ export function DomainSearchHero({
             className="text-sm placeholder:text-muted-foreground px-2.5"
           />
           <InputGroupAddon align="inline-end" className="pr-1">
-            <Button type="submit" variant="default" size="sm" className="h-9 px-4.5 font-medium">
+            <Button
+              type="submit"
+              variant="default"
+              size="sm"
+              className="h-9 px-4.5 font-medium"
+            >
               Search
-              <HugeiconsIcon icon={ArrowRight01Icon} strokeWidth={2} data-icon="inline-end" />
+              <HugeiconsIcon
+                icon={ArrowRight01Icon}
+                strokeWidth={2}
+                data-icon="inline-end"
+              />
             </Button>
           </InputGroupAddon>
         </InputGroup>
@@ -82,17 +95,23 @@ export function DomainSearchHero({
       <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
         <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-normal tracking-[-0.03em] text-foreground leading-[1.08]">
           Buy domains with ease<span className="text-primary">.</span> <br />
-          <span className="italic font-serif">Pay & forget</span>, your domain our responsibility.
+          <span className="italic font-serif">Pay & forget</span>, your domain
+          our responsibility.
         </h1>
 
         <p className="mx-auto mt-6 max-w-xl text-base sm:text-lg text-muted-foreground leading-relaxed">
-          Instant availability checks, transparent pricing in USD ($) and BDT (৳), free WHOIS privacy, and automatic DNS routing.
+          Instant availability checks, transparent pricing in USD ($) and BDT
+          (৳), free WHOIS privacy, and automatic DNS routing.
         </p>
 
         <form onSubmit={handleSearch} className="mx-auto mt-10 max-w-2xl">
           <InputGroup className="h-14 bg-background p-1.5 shadow-sm rounded-xl">
             <InputGroupAddon align="inline-start" className="pl-4">
-              <HugeiconsIcon icon={Search01Icon} strokeWidth={1.5} className="size-5 text-muted-foreground" />
+              <HugeiconsIcon
+                icon={Search01Icon}
+                strokeWidth={1.5}
+                className="size-5 text-muted-foreground"
+              />
             </InputGroupAddon>
             <InputGroupInput
               type="text"
@@ -102,9 +121,17 @@ export function DomainSearchHero({
               className="text-base placeholder:text-muted-foreground px-3"
             />
             <InputGroupAddon align="inline-end" className="pr-1.5">
-              <Button type="submit" size="default" className="h-10 px-6 font-medium">
+              <Button
+                type="submit"
+                size="default"
+                className="h-10 px-6 font-medium"
+              >
                 Explore
-                <HugeiconsIcon icon={ArrowRight01Icon} strokeWidth={2} data-icon="inline-end" />
+                <HugeiconsIcon
+                  icon={ArrowRight01Icon}
+                  strokeWidth={2}
+                  data-icon="inline-end"
+                />
               </Button>
             </InputGroupAddon>
           </InputGroup>

@@ -24,7 +24,9 @@ export function SearchResultCard({
     <Card
       className={cn(
         "transition-all py-4",
-        featured ? "border-primary/50 bg-card" : "border-border bg-background hover:border-primary/40 hover:bg-card/50"
+        featured
+          ? "border-primary/50 bg-card"
+          : "border-border bg-background hover:border-primary/40 hover:bg-card/50",
       )}
     >
       <CardContent className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-0 px-4">
@@ -33,7 +35,7 @@ export function SearchResultCard({
             <span
               className={cn(
                 "size-2.5 rounded-full",
-                result.available ? "bg-emerald-500" : "bg-muted-foreground/50"
+                result.available ? "bg-emerald-500" : "bg-muted-foreground/50",
               )}
             />
           </div>
@@ -81,7 +83,8 @@ export function SearchResultCard({
               </div>
               {result.renewalPrice && (
                 <p className="text-[11px] text-muted-foreground">
-                  Renews at ${result.renewalPrice.toFixed(2)} (৳{toBdt(result.renewalPrice).toLocaleString()})/yr
+                  Renews at ${result.renewalPrice.toFixed(2)} (৳
+                  {toBdt(result.renewalPrice).toLocaleString()})/yr
                 </p>
               )}
             </div>
@@ -93,15 +96,17 @@ export function SearchResultCard({
 
           <div className="flex items-center gap-2 shrink-0">
             <Button
-              render={
-                <Link href={`/${encodeURIComponent(result.domain)}`} />
-              }
+              render={<Link href={`/${encodeURIComponent(result.domain)}`} />}
               nativeButton={false}
               variant={result.available ? "default" : "outline"}
               size="sm"
             >
               {result.available ? "Get Domain" : "Inspect"}
-              <HugeiconsIcon icon={ArrowRight01Icon} strokeWidth={2} data-icon="inline-end" />
+              <HugeiconsIcon
+                icon={ArrowRight01Icon}
+                strokeWidth={2}
+                data-icon="inline-end"
+              />
             </Button>
           </div>
         </div>

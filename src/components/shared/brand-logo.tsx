@@ -23,7 +23,12 @@ export function BrandLogo({
   }, [animated]);
 
   return (
-    <div className={cn("inline-flex items-center gap-1.5 sm:gap-2 select-none", className)}>
+    <div
+      className={cn(
+        "inline-flex items-center gap-1.5 sm:gap-2 select-none",
+        className,
+      )}
+    >
       <svg
         viewBox="0 0 256 222"
         className="size-5 text-primary shrink-0 transition-transform group-hover:scale-110"

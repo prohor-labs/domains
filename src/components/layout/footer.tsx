@@ -11,7 +11,8 @@ export function Footer() {
               <BrandLogo animated={false} />
             </Link>
             <p className="text-sm leading-relaxed text-muted-foreground max-w-sm">
-              Instant domain search, live availability checking, and managed DNS setup with direct checkout.
+              Instant domain search, live availability checking, and managed DNS
+              setup with direct checkout.
             </p>
           </div>
 
@@ -21,22 +22,34 @@ export function Footer() {
             </h3>
             <ul className="mt-4 flex flex-col gap-2.5 text-sm">
               <li>
-                <Link href="/search?q=prohor.com" className="hover:text-foreground transition-colors">
+                <Link
+                  href="/search?q=prohor.com"
+                  className="hover:text-foreground transition-colors"
+                >
                   .com Search
                 </Link>
               </li>
               <li>
-                <Link href="/search?q=prohor.dev" className="hover:text-foreground transition-colors">
+                <Link
+                  href="/search?q=prohor.dev"
+                  className="hover:text-foreground transition-colors"
+                >
                   .dev for Developers
                 </Link>
               </li>
               <li>
-                <Link href="/search?q=prohor.ai" className="hover:text-foreground transition-colors">
+                <Link
+                  href="/search?q=prohor.ai"
+                  className="hover:text-foreground transition-colors"
+                >
                   .ai Intelligence
                 </Link>
               </li>
               <li>
-                <Link href="/search?q=prohor.io" className="hover:text-foreground transition-colors">
+                <Link
+                  href="/search?q=prohor.io"
+                  className="hover:text-foreground transition-colors"
+                >
                   .io for Startups
                 </Link>
               </li>

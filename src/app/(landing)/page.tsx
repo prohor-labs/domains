@@ -20,7 +20,8 @@ export default function LandingHomePage() {
             Curated Extensions
           </h2>
           <p className="text-sm sm:text-base text-muted-foreground max-w-lg mx-auto">
-            Transparent first-year registration and locked-in renewal rates across top namespaces.
+            Transparent first-year registration and locked-in renewal rates
+            across top namespaces.
           </p>
         </div>
 
@@ -52,10 +53,14 @@ export default function LandingHomePage() {
                       <span className="text-xs font-medium text-muted-foreground">
                         (৳{toBdt(regPrice).toLocaleString()})
                       </span>
-                      <span className="text-xs text-muted-foreground"> / yr</span>
+                      <span className="text-xs text-muted-foreground">
+                        {" "}
+                        / yr
+                      </span>
                     </div>
                     <p className="text-[11px] text-muted-foreground mt-0.5">
-                      Renews at ${renPrice.toFixed(2)} (৳{toBdt(renPrice).toLocaleString()})/yr
+                      Renews at ${renPrice.toFixed(2)} (৳
+                      {toBdt(renPrice).toLocaleString()})/yr
                     </p>
                   </div>
 
@@ -83,7 +88,8 @@ export default function LandingHomePage() {
               Ready to claim your next project’s name?
             </h2>
             <p className="text-sm text-primary-foreground/90">
-              Instant search, zero tracking, and real-time wholesale availability.
+              Instant search, zero tracking, and real-time wholesale
+              availability.
             </p>
           </div>
 
@@ -95,7 +101,11 @@ export default function LandingHomePage() {
             className="shrink-0 font-medium"
           >
             Start Searching
-            <HugeiconsIcon icon={ArrowRight01Icon} strokeWidth={2} data-icon="inline-end" />
+            <HugeiconsIcon
+              icon={ArrowRight01Icon}
+              strokeWidth={2}
+              data-icon="inline-end"
+            />
           </Button>
         </Card>
       </section>

@@ -84,11 +84,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn(
-        "h-full",
-        "antialiased",
-        "font-sans"
-      )}
+      className={cn("h-full", "antialiased", "font-sans")}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary/20 selection:text-foreground">
         <ThemeProvider

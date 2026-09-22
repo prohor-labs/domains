@@ -23,7 +23,7 @@ export default async function OGImage({
 
   let isAvailable = false;
   let priceUsd = 11.99;
-  let priceBdt = 1500;
+  let priceBdt = 1559;
   let registrar = "Private / Proxy";
 
   try {
@@ -32,15 +32,45 @@ export default async function OGImage({
     priceUsd = detail.price ?? 11.99;
     priceBdt = toBdt(priceUsd);
     registrar = detail.whois?.registrar || "Private / Proxy";
-  } catch {
-  }
+  } catch {}
 
-  const [newsreaderNormal, newsreaderItalic, interNormal, interSemiBold, notoBengaliNormal] = await Promise.all([
-    readFile(join(process.cwd(), "node_modules/@fontsource/newsreader/files/newsreader-latin-400-normal.woff")),
-    readFile(join(process.cwd(), "node_modules/@fontsource/newsreader/files/newsreader-latin-400-italic.woff")),
-    readFile(join(process.cwd(), "node_modules/@fontsource/inter/files/inter-latin-400-normal.woff")),
-    readFile(join(process.cwd(), "node_modules/@fontsource/inter/files/inter-latin-600-normal.woff")),
-    readFile(join(process.cwd(), "node_modules/@fontsource/noto-sans-bengali/files/noto-sans-bengali-bengali-400-normal.woff")),
+  const [
+    newsreaderNormal,
+    newsreaderItalic,
+    interNormal,
+    interSemiBold,
+    notoBengaliNormal,
+  ] = await Promise.all([
+    readFile(
+      join(
+        process.cwd(),
+        "node_modules/@fontsource/newsreader/files/newsreader-latin-400-normal.woff",
+      ),
+    ),
+    readFile(
+      join(
+        process.cwd(),
+        "node_modules/@fontsource/newsreader/files/newsreader-latin-400-italic.woff",
+      ),
+    ),
+    readFile(
+      join(
+        process.cwd(),
+        "node_modules/@fontsource/inter/files/inter-latin-400-normal.woff",
+      ),
+    ),
+    readFile(
+      join(
+        process.cwd(),
+        "node_modules/@fontsource/inter/files/inter-latin-600-normal.woff",
+      ),
+    ),
+    readFile(
+      join(
+        process.cwd(),
+        "node_modules/@fontsource/noto-sans-bengali/files/noto-sans-bengali-bengali-400-normal.woff",
+      ),
+    ),
   ]);
 
   const parts = cleanDomain.split(".");
@@ -48,188 +78,196 @@ export default async function OGImage({
   const tld = parts.slice(1).join(".") || "com";
 
   return new ImageResponse(
-    (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        backgroundColor: "#181715",
+        backgroundImage:
+          "radial-gradient(circle at 50% 0%, #252320 0%, #181715 75%)",
+        color: "#faf9f5",
+        padding: "60px 72px",
+        fontFamily: "Newsreader",
+      }}
+    >
       <div
         style={{
-          width: "100%",
-          height: "100%",
           display: "flex",
-          flexDirection: "column",
+          alignItems: "center",
           justifyContent: "space-between",
-          backgroundColor: "#181715",
-          backgroundImage: "radial-gradient(circle at 50% 0%, #252320 0%, #181715 75%)",
-          color: "#faf9f5",
-          padding: "60px 72px",
-          fontFamily: "Newsreader",
+          width: "100%",
         }}
       >
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
-            width: "100%",
+            gap: "12px",
           }}
         >
-          <div
+          <svg viewBox="0 0 1155 1000" width="32" height="28">
+            <polygon points="577.5,0 1155,1000 0,1000" fill="#cc785c" />
+          </svg>
+          <span
             style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "12px",
-            }}
-          >
-            <svg
-              viewBox="0 0 1155 1000"
-              width="32"
-              height="28"
-            >
-              <polygon points="577.5,0 1155,1000 0,1000" fill="#cc785c" />
-            </svg>
-            <span
-              style={{
-                fontSize: "28px",
-                color: "rgba(230, 223, 216, 0.5)",
-                fontWeight: 300,
-                fontFamily: "Inter",
-                lineHeight: "1",
-              }}
-            >
-              \
-            </span>
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-              backgroundColor: isAvailable ? "rgba(93, 184, 114, 0.15)" : "#252320",
-              border: `1px solid ${isAvailable ? "rgba(93, 184, 114, 0.4)" : "#3d3d3a"}`,
-              padding: "8px 18px",
-              borderRadius: "9999px",
+              fontSize: "28px",
+              color: "rgba(230, 223, 216, 0.5)",
+              fontWeight: 300,
               fontFamily: "Inter",
+              lineHeight: "1",
             }}
           >
-            <div
-              style={{
-                width: "9px",
-                height: "9px",
-                borderRadius: "9999px",
-                backgroundColor: isAvailable ? "#5db872" : "#8e8b82",
-              }}
-            />
-            <span
-              style={{
-                fontSize: "14px",
-                fontWeight: 600,
-                color: isAvailable ? "#5db872" : "#a09d96",
-                textTransform: "uppercase",
-                letterSpacing: "0.06em",
-              }}
-            >
-              {isAvailable ? "Available for Registration" : "Currently Registered"}
-            </span>
-          </div>
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "16px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "baseline",
-              fontSize: "80px",
-              fontWeight: 400,
-              letterSpacing: "-0.03em",
-              color: "#faf9f5",
-              lineHeight: 1.05,
-              fontFamily: "Newsreader",
-            }}
-          >
-            <span>{sld}</span>
-            <span style={{ color: "#cc785c" }}>.{tld}</span>
-          </div>
-
-          {isAvailable ? (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "8px",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "baseline",
-                  gap: "14px",
-                  fontSize: "38px",
-                  fontWeight: 400,
-                  color: "#faf9f5",
-                  fontFamily: "Newsreader",
-                }}
-              >
-                <span>${priceUsd.toFixed(2)} USD</span>
-                <span style={{ fontSize: "24px", color: "#a09d96", fontFamily: "Inter" }}>
-                  (৳{priceBdt.toLocaleString()} BDT) / yr
-                </span>
-              </div>
-              <div
-                style={{
-                  fontSize: "18px",
-                  color: "#a09d96",
-                  fontFamily: "Inter",
-                }}
-              >
-                Pay & forget — your domain, our responsibility.
-              </div>
-            </div>
-          ) : (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "14px",
-                fontSize: "22px",
-                color: "#a09d96",
-                fontFamily: "Inter",
-              }}
-            >
-              <span>Registrar: {registrar}</span>
-              <span>-</span>
-              <span>Live WHOIS & DNS Intelligence</span>
-            </div>
-          )}
+            \
+          </span>
         </div>
 
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
-            borderTop: "1px solid rgba(230, 223, 216, 0.15)",
-            paddingTop: "24px",
-            fontSize: "15px",
-            color: "#8e8b82",
+            gap: "10px",
+            backgroundColor: isAvailable
+              ? "rgba(93, 184, 114, 0.12)"
+              : "#252320",
+            border: `1px solid ${isAvailable ? "rgba(93, 184, 114, 0.35)" : "#3d3d3a"}`,
+            padding: "8px 20px",
+            borderRadius: "9999px",
             fontFamily: "Inter",
           }}
         >
-          <div style={{ display: "flex", gap: "28px" }}>
-            <span>Free WHOIS Privacy</span>
-            <span>-</span>
-            <span>Managed DNS</span>
-            <span>-</span>
-            <span>Dual USD & BDT Checkout</span>
-          </div>
-          <span style={{ fontWeight: 600, color: "#e8e0d2" }}>domains.prohor.dev</span>
+          <div
+            style={{
+              width: "8px",
+              height: "8px",
+              borderRadius: "9999px",
+              backgroundColor: isAvailable ? "#5db872" : "#8e8b82",
+            }}
+          />
+          <span
+            style={{
+              fontSize: "13px",
+              fontWeight: 600,
+              color: isAvailable ? "#5db872" : "#a09d96",
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+            }}
+          >
+            {isAvailable ? "Available for Registration" : "Registered"}
+          </span>
         </div>
       </div>
-    ),
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "18px",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "baseline",
+            fontSize: "88px",
+            fontWeight: 400,
+            letterSpacing: "-0.03em",
+            color: "#faf9f5",
+            lineHeight: 1.05,
+            fontFamily: "Newsreader",
+          }}
+        >
+          <span>{sld}</span>
+          <span style={{ color: "#cc785c" }}>.{tld}</span>
+        </div>
+
+        {isAvailable ? (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "baseline",
+                gap: "14px",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "44px",
+                  fontWeight: 400,
+                  color: "#faf9f5",
+                  fontFamily: "Newsreader",
+                }}
+              >
+                ${priceUsd.toFixed(2)} USD
+              </span>
+              <span
+                style={{
+                  fontSize: "26px",
+                  fontWeight: 400,
+                  color: "#a09d96",
+                  fontFamily: "Inter",
+                }}
+              >
+                (৳{priceBdt.toLocaleString()} BDT) / yr
+              </span>
+            </div>
+            <div
+              style={{
+                fontSize: "19px",
+                color: "#a09d96",
+                fontFamily: "Inter",
+              }}
+            >
+              <span style={{ color: "#cc785c", fontStyle: "italic" }}>
+                Pay & forget
+              </span>{" "}
+              — your domain, our responsibility.
+            </div>
+          </div>
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "14px",
+              fontSize: "22px",
+              color: "#a09d96",
+              fontFamily: "Inter",
+            }}
+          >
+            <span>Registrar: {registrar}</span>
+            <span>-</span>
+            <span>Live WHOIS & DNS Records</span>
+          </div>
+        )}
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          borderTop: "1px solid rgba(230, 223, 216, 0.15)",
+          paddingTop: "24px",
+          fontSize: "15px",
+          color: "#8e8b82",
+          fontFamily: "Inter",
+        }}
+      >
+        <span style={{ fontWeight: 600, color: "#e8e0d2" }}>
+          Prohor Domains
+        </span>
+        <span style={{ color: "#a09d96" }}>domains.prohor.dev</span>
+      </div>
+    </div>,
     {
       ...size,
       fonts: [
@@ -264,6 +302,6 @@ export default async function OGImage({
           style: "normal",
         },
       ],
-    }
+    },
   );
 }

@@ -7,7 +7,12 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { DomainSearchHero } from "@/components/search/domain-search-hero";
 import { SearchResultCard } from "@/components/search/search-result-card";
 import { useDomainSearch } from "@/hooks/use-domain-search";
-import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/components/ui/empty";
 import { Skeleton } from "@/components/ui/skeleton";
 
 function SearchContent() {
@@ -46,10 +51,15 @@ function SearchContent() {
       {activeSearchTerm.length < 2 ? (
         <Empty className="border border-dashed border-border py-12">
           <EmptyHeader>
-            <HugeiconsIcon icon={Search01Icon} strokeWidth={1.5} className="mx-auto size-8 text-muted-foreground" />
+            <HugeiconsIcon
+              icon={Search01Icon}
+              strokeWidth={1.5}
+              className="mx-auto size-8 text-muted-foreground"
+            />
             <EmptyTitle>Enter a domain name to search</EmptyTitle>
             <EmptyDescription>
-              Type your desired brand or keyword above and click Search to check live availability.
+              Type your desired brand or keyword above and click Search to check
+              live availability.
             </EmptyDescription>
           </EmptyHeader>
         </Empty>
