@@ -1,4 +1,6 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { getDomainDetailsAction } from "@/lib/actions/domains";
 import { toBdt } from "@/lib/utils/pricing";
 
@@ -33,6 +35,13 @@ export default async function OGImage({
   } catch {
   }
 
+  const [newsreaderNormal, newsreaderItalic, interNormal, interSemiBold] = await Promise.all([
+    readFile(join(process.cwd(), "node_modules/@fontsource/newsreader/files/newsreader-latin-400-normal.woff")),
+    readFile(join(process.cwd(), "node_modules/@fontsource/newsreader/files/newsreader-latin-400-italic.woff")),
+    readFile(join(process.cwd(), "node_modules/@fontsource/inter/files/inter-latin-400-normal.woff")),
+    readFile(join(process.cwd(), "node_modules/@fontsource/inter/files/inter-latin-600-normal.woff")),
+  ]);
+
   const parts = cleanDomain.split(".");
   const sld = parts[0];
   const tld = parts.slice(1).join(".") || "com";
@@ -50,7 +59,7 @@ export default async function OGImage({
           backgroundImage: "radial-gradient(circle at 50% 0%, #252320 0%, #181715 75%)",
           color: "#faf9f5",
           padding: "60px 72px",
-          fontFamily: "serif",
+          fontFamily: "Newsreader",
         }}
       >
         <div
@@ -65,36 +74,26 @@ export default async function OGImage({
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "10px",
+              gap: "12px",
             }}
           >
             <svg
               viewBox="0 0 1155 1000"
-              width="28"
-              height="24"
-              fill="#cc785c"
+              width="32"
+              height="28"
             >
-              <path d="m577.3 0 577.4 1000H0z" />
+              <polygon points="577.5,0 1155,1000 0,1000" fill="#cc785c" />
             </svg>
             <span
               style={{
-                fontSize: "24px",
-                color: "rgba(230, 223, 216, 0.4)",
-                fontWeight: "300",
-                fontFamily: "sans-serif",
+                fontSize: "28px",
+                color: "rgba(230, 223, 216, 0.5)",
+                fontWeight: 300,
+                fontFamily: "Inter",
+                lineHeight: "1",
               }}
             >
               \
-            </span>
-            <span
-              style={{
-                fontSize: "26px",
-                fontWeight: "500",
-                color: "#faf9f5",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              .dev
             </span>
           </div>
 
@@ -107,7 +106,7 @@ export default async function OGImage({
               border: `1px solid ${isAvailable ? "rgba(93, 184, 114, 0.4)" : "#3d3d3a"}`,
               padding: "8px 18px",
               borderRadius: "9999px",
-              fontFamily: "sans-serif",
+              fontFamily: "Inter",
             }}
           >
             <div
@@ -121,7 +120,7 @@ export default async function OGImage({
             <span
               style={{
                 fontSize: "14px",
-                fontWeight: "600",
+                fontWeight: 600,
                 color: isAvailable ? "#5db872" : "#a09d96",
                 textTransform: "uppercase",
                 letterSpacing: "0.06em",
@@ -144,10 +143,11 @@ export default async function OGImage({
               display: "flex",
               alignItems: "baseline",
               fontSize: "80px",
-              fontWeight: "400",
+              fontWeight: 400,
               letterSpacing: "-0.03em",
               color: "#faf9f5",
               lineHeight: 1.05,
+              fontFamily: "Newsreader",
             }}
           >
             <span>{sld}</span>
@@ -168,12 +168,13 @@ export default async function OGImage({
                   alignItems: "baseline",
                   gap: "14px",
                   fontSize: "38px",
-                  fontWeight: "400",
+                  fontWeight: 400,
                   color: "#faf9f5",
+                  fontFamily: "Newsreader",
                 }}
               >
                 <span>${priceUsd.toFixed(2)} USD</span>
-                <span style={{ fontSize: "24px", color: "#a09d96", fontFamily: "sans-serif" }}>
+                <span style={{ fontSize: "24px", color: "#a09d96", fontFamily: "Inter" }}>
                   (৳{priceBdt.toLocaleString()} BDT) / yr
                 </span>
               </div>
@@ -181,7 +182,7 @@ export default async function OGImage({
                 style={{
                   fontSize: "18px",
                   color: "#a09d96",
-                  fontFamily: "sans-serif",
+                  fontFamily: "Inter",
                 }}
               >
                 Pay & forget — your domain, our responsibility.
@@ -195,7 +196,7 @@ export default async function OGImage({
                 gap: "14px",
                 fontSize: "22px",
                 color: "#a09d96",
-                fontFamily: "sans-serif",
+                fontFamily: "Inter",
               }}
             >
               <span>Registrar: {registrar}</span>
@@ -214,7 +215,7 @@ export default async function OGImage({
             paddingTop: "24px",
             fontSize: "15px",
             color: "#8e8b82",
-            fontFamily: "sans-serif",
+            fontFamily: "Inter",
           }}
         >
           <div style={{ display: "flex", gap: "28px" }}>
@@ -224,12 +225,38 @@ export default async function OGImage({
             <span>-</span>
             <span>Dual USD & BDT Checkout</span>
           </div>
-          <span style={{ fontWeight: "600", color: "#e8e0d2" }}>domains.prohor.dev</span>
+          <span style={{ fontWeight: 600, color: "#e8e0d2" }}>domains.prohor.dev</span>
         </div>
       </div>
     ),
     {
       ...size,
+      fonts: [
+        {
+          name: "Newsreader",
+          data: newsreaderNormal,
+          weight: 400,
+          style: "normal",
+        },
+        {
+          name: "Newsreader",
+          data: newsreaderItalic,
+          weight: 400,
+          style: "italic",
+        },
+        {
+          name: "Inter",
+          data: interNormal,
+          weight: 400,
+          style: "normal",
+        },
+        {
+          name: "Inter",
+          data: interSemiBold,
+          weight: 600,
+          style: "normal",
+        },
+      ],
     }
   );
 }

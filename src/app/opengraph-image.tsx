@@ -1,4 +1,6 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 
 export const runtime = "nodejs";
 
@@ -10,6 +12,13 @@ export const size = {
 export const contentType = "image/png";
 
 export default async function RootOGImage() {
+  const [newsreaderNormal, newsreaderItalic, interNormal, interSemiBold] = await Promise.all([
+    readFile(join(process.cwd(), "node_modules/@fontsource/newsreader/files/newsreader-latin-400-normal.woff")),
+    readFile(join(process.cwd(), "node_modules/@fontsource/newsreader/files/newsreader-latin-400-italic.woff")),
+    readFile(join(process.cwd(), "node_modules/@fontsource/inter/files/inter-latin-400-normal.woff")),
+    readFile(join(process.cwd(), "node_modules/@fontsource/inter/files/inter-latin-600-normal.woff")),
+  ]);
+
   return new ImageResponse(
     (
       <div
@@ -23,7 +32,7 @@ export default async function RootOGImage() {
           backgroundImage: "radial-gradient(circle at 50% 0%, #252320 0%, #181715 75%)",
           color: "#faf9f5",
           padding: "60px 72px",
-          fontFamily: "serif",
+          fontFamily: "Newsreader",
         }}
       >
         <div
@@ -38,36 +47,26 @@ export default async function RootOGImage() {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "10px",
+              gap: "12px",
             }}
           >
             <svg
               viewBox="0 0 1155 1000"
-              width="28"
-              height="24"
-              fill="#cc785c"
+              width="32"
+              height="28"
             >
-              <path d="m577.3 0 577.4 1000H0z" />
+              <polygon points="577.5,0 1155,1000 0,1000" fill="#cc785c" />
             </svg>
             <span
               style={{
-                fontSize: "24px",
-                color: "rgba(230, 223, 216, 0.4)",
-                fontWeight: "300",
-                fontFamily: "sans-serif",
+                fontSize: "28px",
+                color: "rgba(230, 223, 216, 0.5)",
+                fontWeight: 300,
+                fontFamily: "Inter",
+                lineHeight: "1",
               }}
             >
               \
-            </span>
-            <span
-              style={{
-                fontSize: "26px",
-                fontWeight: "500",
-                color: "#faf9f5",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              .dev
             </span>
           </div>
 
@@ -80,13 +79,13 @@ export default async function RootOGImage() {
               border: "1px solid #3d3d3a",
               padding: "6px 16px",
               borderRadius: "9999px",
-              fontFamily: "sans-serif",
+              fontFamily: "Inter",
             }}
           >
             <span
               style={{
                 fontSize: "13px",
-                fontWeight: "500",
+                fontWeight: 600,
                 color: "#a09d96",
                 letterSpacing: "0.02em",
               }}
@@ -107,11 +106,12 @@ export default async function RootOGImage() {
             style={{
               display: "flex",
               flexDirection: "column",
-              fontSize: "62px",
-              fontWeight: "400",
+              fontSize: "64px",
+              fontWeight: 400,
               letterSpacing: "-0.03em",
               color: "#faf9f5",
               lineHeight: 1.1,
+              fontFamily: "Newsreader",
             }}
           >
             <span>
@@ -126,8 +126,8 @@ export default async function RootOGImage() {
             style={{
               fontSize: "22px",
               color: "#a09d96",
-              fontWeight: "400",
-              fontFamily: "sans-serif",
+              fontWeight: 400,
+              fontFamily: "Inter",
               lineHeight: 1.4,
               maxWidth: "880px",
             }}
@@ -145,7 +145,7 @@ export default async function RootOGImage() {
             paddingTop: "24px",
             fontSize: "15px",
             color: "#8e8b82",
-            fontFamily: "sans-serif",
+            fontFamily: "Inter",
           }}
         >
           <div style={{ display: "flex", gap: "28px" }}>
@@ -155,12 +155,38 @@ export default async function RootOGImage() {
             <span>-</span>
             <span>Dual USD & BDT Checkout</span>
           </div>
-          <span style={{ fontWeight: "600", color: "#e8e0d2" }}>Prohor Domains</span>
+          <span style={{ fontWeight: 600, color: "#e8e0d2" }}>Prohor Domains</span>
         </div>
       </div>
     ),
     {
       ...size,
+      fonts: [
+        {
+          name: "Newsreader",
+          data: newsreaderNormal,
+          weight: 400,
+          style: "normal",
+        },
+        {
+          name: "Newsreader",
+          data: newsreaderItalic,
+          weight: 400,
+          style: "italic",
+        },
+        {
+          name: "Inter",
+          data: interNormal,
+          weight: 400,
+          style: "normal",
+        },
+        {
+          name: "Inter",
+          data: interSemiBold,
+          weight: 600,
+          style: "normal",
+        },
+      ],
     }
   );
 }
