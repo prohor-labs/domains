@@ -34,6 +34,8 @@ export interface DomainDetail {
   years?: number;
   whois?: {
     registrar?: string;
+    abuseEmail?: string;
+    abusePhone?: string;
     createdDate?: string;
     expiredDate?: string;
     updatedDate?: string;
@@ -43,17 +45,11 @@ export interface DomainDetail {
   };
   dns?: {
     aRecords?: string[];
+    aaaaRecords?: string[];
     cnameRecords?: string[];
     mxRecords?: string[];
     txtRecords?: string[];
     nsRecords?: string[];
+    soaRecord?: string;
   };
-}
-
-export interface WatchlistItem {
-  domain: string;
-  available: boolean;
-  price?: number;
-  renewalPrice?: number;
-  addedAt: string;
 }

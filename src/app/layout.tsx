@@ -3,6 +3,7 @@ import { Inter, Newsreader, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { QueryProvider } from "@/lib/query/provider";
+import { ThemeProvider } from "@/components/shared/theme-provider";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 const inter = Inter({
@@ -23,7 +24,10 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#000000",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fafaf9" },
+    { media: "(prefers-color-scheme: dark)", color: "#0c0a09" },
+  ],
   width: "device-width",
   initialScale: 1,
 };
@@ -44,7 +48,6 @@ export const metadata: Metadata = {
     "domain registration Bangladesh",
     "BDT domain pricing",
     "whois privacy",
-    "TLD pricing directory",
     "prohor",
     "instant domain search",
   ],
@@ -96,6 +99,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={cn(
         "h-full",
         "antialiased",
@@ -106,9 +110,16 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground selection:bg-primary/20 selection:text-foreground">
-        <NuqsAdapter>
-          <QueryProvider>{children}</QueryProvider>
-        </NuqsAdapter>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NuqsAdapter>
+            <QueryProvider>{children}</QueryProvider>
+          </NuqsAdapter>
+        </ThemeProvider>
       </body>
     </html>
   );

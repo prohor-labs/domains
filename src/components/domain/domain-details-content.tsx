@@ -1,31 +1,44 @@
 "use client";
 
 import { useDomainDetails } from "@/hooks/use-domain-details";
-import { useWatchlist } from "@/hooks/use-watchlist";
 import { cn } from "@/lib/utils";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Empty, EmptyDescription, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
-  Bookmark02Icon,
-  GlobalIcon,
   ServerIcon,
-  CheckmarkCircle02Icon,
   LockIcon,
   SentIcon,
   Shield01Icon,
+  Calendar03Icon,
+  Building01Icon,
+  Mail01Icon,
 } from "@hugeicons/core-free-icons";
 import Link from "next/link";
 import { toBdt } from "@/lib/utils/pricing";
 
+function formatDate(dateStr?: string) {
+  if (!dateStr) return "N/A";
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return dateStr;
+    return d.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  } catch {
+    return dateStr;
+  }
+}
+
 export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
   const cleanDomain = decodeURIComponent(domainSlug).toLowerCase().trim();
   const { data: detail, isLoading, error } = useDomainDetails(cleanDomain);
-  const { toggleSave, isSaved } = useWatchlist();
-  const saved = isSaved(cleanDomain);
 
   if (isLoading) {
     return (
@@ -79,7 +92,7 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
                 )}
               />
               <span className="text-xs font-medium text-foreground">
-                {detail.available ? "Available for Registration" : "Currently Registered"}
+                {detail.available ? "Available" : "Registered"}
               </span>
             </div>
 
@@ -91,7 +104,7 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
             <p className="mt-2 text-xs sm:text-sm text-muted-foreground">
               {detail.available
                 ? "This domain name is currently unclaimed and available for instant registration."
-                : "This domain name is currently registered. Live DNS delegations and status are shown below."}
+                : "Live registration data, registrar records, and DNS delegations."}
             </p>
           </div>
 
@@ -114,30 +127,6 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
                 )}
               </div>
             ) : null}
-
-            <div className="flex items-center gap-2.5 w-full sm:w-auto">
-              <Button
-                type="button"
-                variant={saved ? "default" : "outline"}
-                size="sm"
-                onClick={() =>
-                  toggleSave({
-                    domain: detail.domain,
-                    available: detail.available,
-                    price: detail.price,
-                    renewalPrice: detail.renewalPrice,
-                  })
-                }
-                className="w-full sm:w-auto"
-              >
-                <HugeiconsIcon
-                  icon={Bookmark02Icon}
-                  strokeWidth={1.5}
-                  className={cn("size-4", saved && "fill-current")}
-                />
-                <span>{saved ? "Saved to Watchlist" : "Save to Watchlist"}</span>
-              </Button>
-            </div>
           </div>
         </div>
       </Card>
@@ -276,94 +265,206 @@ export function DomainDetailsContent({ domainSlug }: { domainSlug: string }) {
         </div>
       ) : null}
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-        <Card className="p-6 shadow-2xs">
-          <CardHeader className="p-0">
-            <div className="flex items-center gap-2 text-foreground font-serif text-lg">
-              <HugeiconsIcon icon={CheckmarkCircle02Icon} strokeWidth={1.5} className="size-4.5 text-primary" />
-              <CardTitle className="font-serif text-base">Registry Status</CardTitle>
+      {!detail.available && (
+        <div className="flex flex-col gap-6">
+          <Card className="bg-card p-6 shadow-xs">
+            <div className="flex items-center justify-between pb-4 border-b border-border">
+              <div className="flex items-center gap-2">
+                <HugeiconsIcon icon={Building01Icon} strokeWidth={1.5} className="size-4 text-primary" />
+                <h2 className="font-mono text-sm font-medium text-foreground">
+                  WHOIS
+                </h2>
+              </div>
+              <span className="font-mono text-[11px] text-muted-foreground">RDAP</span>
             </div>
-            <CardDescription className="mt-2 text-xs text-muted-foreground leading-relaxed">
-              Top-Level Domain <strong>.{detail.tld}</strong> is managed under standard ICANN root zone agreements.
-            </CardDescription>
-          </CardHeader>
-        </Card>
 
-        <Card className="p-6 shadow-2xs">
-          <CardHeader className="p-0">
-            <div className="flex items-center gap-2 text-foreground font-serif text-lg">
-              <HugeiconsIcon icon={GlobalIcon} strokeWidth={1.5} className="size-4.5 text-primary" />
-              <CardTitle className="font-serif text-base">DNSSEC Support</CardTitle>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 pt-5 text-xs">
+              <div className="flex flex-col gap-1">
+                <span className="text-[11px] uppercase tracking-wider text-muted-foreground">
+                  Registrar
+                </span>
+                <span className="font-medium text-foreground text-sm">
+                  {detail.whois?.registrar || "Private / Proxy"}
+                </span>
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <span className="text-[11px] uppercase tracking-wider text-muted-foreground flex items-center gap-1">
+                  <HugeiconsIcon icon={Calendar03Icon} strokeWidth={1.5} className="size-3.5" />
+                  Registered
+                </span>
+                <span className="font-medium text-foreground text-sm">
+                  {formatDate(detail.whois?.createdDate)}
+                </span>
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <span className="text-[11px] uppercase tracking-wider text-muted-foreground flex items-center gap-1">
+                  <HugeiconsIcon icon={Calendar03Icon} strokeWidth={1.5} className="size-3.5" />
+                  Expires
+                </span>
+                <span className="font-medium text-foreground text-sm">
+                  {formatDate(detail.whois?.expiredDate)}
+                </span>
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <span className="text-[11px] uppercase tracking-wider text-muted-foreground">
+                  DNSSEC
+                </span>
+                <span className="font-medium text-foreground text-sm">
+                  {detail.whois?.dnssec ? "Signed" : "Unsigned"}
+                </span>
+              </div>
             </div>
-            <CardDescription className="mt-2 text-xs text-muted-foreground leading-relaxed">
-              Cryptographic DNS authentication support to protect domain resolution from forgery.
-            </CardDescription>
-          </CardHeader>
-        </Card>
 
-        <Card className="p-6 shadow-2xs">
-          <CardHeader className="p-0">
-            <div className="flex items-center gap-2 text-foreground font-serif text-lg">
-              <HugeiconsIcon icon={ServerIcon} strokeWidth={1.5} className="size-4.5 text-primary" />
-              <CardTitle className="font-serif text-base">Global Anycast</CardTitle>
-            </div>
-            <CardDescription className="mt-2 text-xs text-muted-foreground leading-relaxed">
-              Distributed nameserver routing for ultra-low latency record lookup worldwide.
-            </CardDescription>
-          </CardHeader>
-        </Card>
-      </div>
+            {(detail.whois?.abuseEmail || detail.whois?.abusePhone) && (
+              <div className="mt-5 pt-4 border-t border-border flex flex-wrap items-center gap-6 text-xs text-muted-foreground">
+                {detail.whois.abuseEmail && (
+                  <div className="flex items-center gap-1.5">
+                    <HugeiconsIcon icon={Mail01Icon} strokeWidth={1.5} className="size-3.5" />
+                    <span>Abuse: {detail.whois.abuseEmail}</span>
+                  </div>
+                )}
+                {detail.whois.abusePhone && (
+                  <div>
+                    <span>Phone: {detail.whois.abusePhone}</span>
+                  </div>
+                )}
+              </div>
+            )}
 
-      {!detail.available && detail.dns && (
-        <Card className="bg-card p-6 text-card-foreground shadow-sm">
-          <div className="flex items-center justify-between pb-4">
-            <div className="flex items-center gap-2">
-              <HugeiconsIcon icon={ServerIcon} strokeWidth={1.5} className="size-4 text-primary" />
-              <h2 className="font-mono text-sm font-medium text-foreground">
-                DNS Records & Nameservers
-              </h2>
-            </div>
-            <span className="font-mono text-[11px] text-muted-foreground">Edge Query</span>
-          </div>
-
-          <Separator className="mb-4" />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 font-mono text-xs">
-            <div>
-              <span className="text-muted-foreground uppercase text-[10px] tracking-wider block mb-2">
-                Nameservers (NS)
-              </span>
-              {detail.dns.nsRecords && detail.dns.nsRecords.length > 0 ? (
-                <ul className="flex flex-col gap-1.5 text-foreground">
-                  {detail.dns.nsRecords.map((ns) => (
-                    <li key={ns} className="rounded bg-background px-2.5 py-1 text-[11px] break-all border border-border">
-                      {ns}
-                    </li>
+            {detail.whois?.status && detail.whois.status.length > 0 && (
+              <div className="mt-5 pt-4 border-t border-border flex flex-col gap-2">
+                <span className="text-[11px] uppercase tracking-wider text-muted-foreground">
+                  Status Flags
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {detail.whois.status.map((st) => (
+                    <Badge key={st} variant="secondary" className="font-mono text-[10px] px-2 py-0.5">
+                      {st}
+                    </Badge>
                   ))}
-                </ul>
-              ) : (
-                <p className="text-muted-foreground">No active NS records found</p>
-              )}
-            </div>
+                </div>
+              </div>
+            )}
+          </Card>
 
-            <div>
-              <span className="text-muted-foreground uppercase text-[10px] tracking-wider block mb-2">
-                IP Address (A Records)
-              </span>
-              {detail.dns.aRecords && detail.dns.aRecords.length > 0 ? (
-                <ul className="flex flex-col gap-1.5 text-foreground">
-                  {detail.dns.aRecords.map((ip) => (
-                    <li key={ip} className="rounded bg-background px-2.5 py-1 text-[11px] break-all border border-border">
-                      {ip}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="text-muted-foreground">No active A records</p>
-              )}
-            </div>
-          </div>
-        </Card>
+          {detail.dns && (
+            <Card className="bg-card p-6 shadow-xs">
+              <div className="flex items-center justify-between pb-4 border-b border-border">
+                <div className="flex items-center gap-2">
+                  <HugeiconsIcon icon={ServerIcon} strokeWidth={1.5} className="size-4 text-primary" />
+                  <h2 className="font-mono text-sm font-medium text-foreground">
+                    DNS Records
+                  </h2>
+                </div>
+                <span className="font-mono text-[11px] text-muted-foreground">DoH</span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-5 font-mono text-xs">
+                <div>
+                  <span className="text-muted-foreground uppercase text-[10px] tracking-wider block mb-2">
+                    Nameservers (NS)
+                  </span>
+                  {detail.dns.nsRecords && detail.dns.nsRecords.length > 0 ? (
+                    <ul className="flex flex-col gap-1.5 text-foreground">
+                      {detail.dns.nsRecords.map((ns) => (
+                        <li key={ns} className="rounded-lg bg-background px-3 py-1.5 text-xs break-all border border-border flex items-center justify-between">
+                          <span>{ns}</span>
+                          <span className="text-[10px] text-muted-foreground">NS</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-muted-foreground">No active NS records found</p>
+                  )}
+                </div>
+
+                <div>
+                  <span className="text-muted-foreground uppercase text-[10px] tracking-wider block mb-2">
+                    A Records (IPv4)
+                  </span>
+                  {detail.dns.aRecords && detail.dns.aRecords.length > 0 ? (
+                    <ul className="flex flex-col gap-1.5 text-foreground">
+                      {detail.dns.aRecords.map((ip) => (
+                        <li key={ip} className="rounded-lg bg-background px-3 py-1.5 text-xs break-all border border-border flex items-center justify-between">
+                          <span>{ip}</span>
+                          <span className="text-[10px] text-muted-foreground">A</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-muted-foreground">No active A records</p>
+                  )}
+                </div>
+
+                {detail.dns.aaaaRecords && detail.dns.aaaaRecords.length > 0 && (
+                  <div>
+                    <span className="text-muted-foreground uppercase text-[10px] tracking-wider block mb-2">
+                      AAAA Records (IPv6)
+                    </span>
+                    <ul className="flex flex-col gap-1.5 text-foreground">
+                      {detail.dns.aaaaRecords.map((ip6) => (
+                        <li key={ip6} className="rounded-lg bg-background px-3 py-1.5 text-xs break-all border border-border flex items-center justify-between">
+                          <span>{ip6}</span>
+                          <span className="text-[10px] text-muted-foreground">AAAA</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {detail.dns.mxRecords && detail.dns.mxRecords.length > 0 && (
+                  <div>
+                    <span className="text-muted-foreground uppercase text-[10px] tracking-wider block mb-2">
+                      MX Records
+                    </span>
+                    <ul className="flex flex-col gap-1.5 text-foreground">
+                      {detail.dns.mxRecords.map((mx) => (
+                        <li key={mx} className="rounded-lg bg-background px-3 py-1.5 text-xs break-all border border-border flex items-center justify-between">
+                          <span>{mx}</span>
+                          <span className="text-[10px] text-muted-foreground">MX</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {detail.dns.cnameRecords && detail.dns.cnameRecords.length > 0 && (
+                  <div>
+                    <span className="text-muted-foreground uppercase text-[10px] tracking-wider block mb-2">
+                      CNAME Records
+                    </span>
+                    <ul className="flex flex-col gap-1.5 text-foreground">
+                      {detail.dns.cnameRecords.map((cname) => (
+                        <li key={cname} className="rounded-lg bg-background px-3 py-1.5 text-xs break-all border border-border flex items-center justify-between">
+                          <span>{cname}</span>
+                          <span className="text-[10px] text-muted-foreground">CNAME</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {detail.dns.txtRecords && detail.dns.txtRecords.length > 0 && (
+                  <div className="md:col-span-2">
+                    <span className="text-muted-foreground uppercase text-[10px] tracking-wider block mb-2">
+                      TXT Records
+                    </span>
+                    <ul className="flex flex-col gap-1.5 text-foreground">
+                      {detail.dns.txtRecords.map((txt, idx) => (
+                        <li key={idx} className="rounded-lg bg-background px-3 py-1.5 text-[11px] break-all border border-border">
+                          {txt}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </Card>
+          )}
+        </div>
       )}
     </div>
   );

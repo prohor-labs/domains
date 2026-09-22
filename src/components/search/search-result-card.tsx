@@ -1,12 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import {
-  ArrowRight01Icon,
-  Bookmark02Icon,
-} from "@hugeicons/core-free-icons";
+import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useWatchlist } from "@/hooks/use-watchlist";
 import type { DomainSearchResult } from "@/lib/types/domain";
 import { cn } from "@/lib/utils";
 import { toBdt } from "@/lib/utils/pricing";
@@ -20,9 +16,6 @@ export function SearchResultCard({
   result: DomainSearchResult;
   featured?: boolean;
 }) {
-  const { toggleSave, isSaved } = useWatchlist();
-  const saved = isSaved(result.domain);
-
   const parts = result.domain.split(".");
   const sld = parts[0];
   const tld = parts.slice(1).join(".");
@@ -99,27 +92,6 @@ export function SearchResultCard({
           )}
 
           <div className="flex items-center gap-2 shrink-0">
-            <Button
-              type="button"
-              variant={saved ? "default" : "outline"}
-              size="icon"
-              onClick={() =>
-                toggleSave({
-                  domain: result.domain,
-                  available: result.available,
-                  price: result.price,
-                  renewalPrice: result.renewalPrice,
-                })
-              }
-              aria-label={saved ? "Remove from watchlist" : "Add to watchlist"}
-            >
-              <HugeiconsIcon
-                icon={Bookmark02Icon}
-                strokeWidth={1.5}
-                className={cn("size-3.5", saved && "fill-current")}
-              />
-            </Button>
-
             <Button
               render={
                 <Link href={`/${encodeURIComponent(result.domain)}`} />

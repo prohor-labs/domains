@@ -1,8 +1,5 @@
 import Link from "next/link";
-import {
-  ArrowRight01Icon,
-  CheckmarkCircle02Icon,
-} from "@hugeicons/core-free-icons";
+import { ArrowRight01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { DomainSearchHero } from "@/components/search/domain-search-hero";
 import { TLD_DIRECTORY } from "@/lib/constants/tlds";
@@ -77,79 +74,6 @@ export default function LandingHomePage() {
             );
           })}
         </div>
-
-        <div className="mt-10 text-center">
-          <Button
-            render={<Link href="/pricing" />}
-            nativeButton={false}
-            variant="link"
-            size="sm"
-            className="text-primary hover:underline underline-offset-4"
-          >
-            View all 900+ TLD pricing directory
-            <HugeiconsIcon icon={ArrowRight01Icon} strokeWidth={2} data-icon="inline-end" />
-          </Button>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-4 sm:px-6">
-        <Card className="bg-card p-8 sm:p-14 text-foreground shadow-xl">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-            <div className="flex flex-col gap-6">
-              <h2 className="font-serif text-3xl sm:text-5xl font-normal text-foreground tracking-[-0.02em] leading-[1.1]">
-                Pay & Forget. <br />
-                <span className="italic font-serif">Your domain, our responsibility.</span>
-              </h2>
-
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                We manage the registration, automatic DNS delegations, renewal tracking, and privacy protection end-to-end so you never lose your namespace.
-              </p>
-
-              <div className="flex flex-col gap-3 pt-2">
-                <div className="flex items-center gap-3 text-xs text-foreground">
-                  <HugeiconsIcon icon={CheckmarkCircle02Icon} strokeWidth={1.5} className="size-4 text-emerald-500" />
-                  <span>Instant dual currency checkout in USD and BDT</span>
-                </div>
-                <div className="flex items-center gap-3 text-xs text-foreground">
-                  <HugeiconsIcon icon={CheckmarkCircle02Icon} strokeWidth={1.5} className="size-4 text-emerald-500" />
-                  <span>Transparent renewal schedules with zero surprise price spikes</span>
-                </div>
-                <div className="flex items-center gap-3 text-xs text-foreground">
-                  <HugeiconsIcon icon={CheckmarkCircle02Icon} strokeWidth={1.5} className="size-4 text-emerald-500" />
-                  <span>Instant Telegram concierge dispatch for seamless manual verification</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="rounded-xl border border-border bg-background p-5 font-mono text-xs shadow-inner overflow-x-auto">
-              <div className="flex items-center justify-between border-b border-border pb-3 mb-3 text-muted-foreground">
-                <span>POST /api/domains/search</span>
-                <span className="font-medium text-emerald-600 dark:text-emerald-400">200 OK</span>
-              </div>
-              <pre className="text-primary leading-relaxed">
-{`{
-  "query": "prohor",
-  "results": [
-    {
-      "domain": "prohor.dev",
-      "available": false
-    },
-    {
-      "domain": "prohor.com",
-      "available": false
-    },
-    {
-      "domain": "prohor.xyz",
-      "available": true,
-      "price": 2.04,
-      "renewalPrice": 14.21
-    }
-  ]
-}`}
-              </pre>
-            </div>
-          </div>
-        </Card>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 sm:px-6 pb-12">
