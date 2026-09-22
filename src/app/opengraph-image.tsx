@@ -63,7 +63,7 @@ export default async function RootOGImage() {
         backgroundImage:
           "radial-gradient(circle at 50% 0%, #252320 0%, #181715 75%)",
         color: "#faf9f5",
-        padding: "64px 80px",
+        padding: "60px 80px",
         fontFamily: "Newsreader",
       }}
     >
@@ -94,19 +94,20 @@ export default async function RootOGImage() {
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "24px",
-          marginBottom: "40px",
+          gap: "18px",
+          marginTop: "10px",
+          marginBottom: "10px",
         }}
       >
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            fontSize: "76px",
+            fontSize: "72px",
             fontWeight: 400,
             letterSpacing: "-0.03em",
             color: "#faf9f5",
-            lineHeight: 1.25,
+            lineHeight: 1.2,
             fontFamily: "Newsreader",
           }}
         >
@@ -121,26 +122,54 @@ export default async function RootOGImage() {
             fontSize: "58px",
             fontWeight: 400,
             letterSpacing: "-0.02em",
-            color: "#e8e0d2",
-            lineHeight: 1.25,
+            color: "#cc785c",
+            fontStyle: "italic",
+            lineHeight: 1.2,
             fontFamily: "Newsreader",
           }}
         >
-          <span style={{ fontStyle: "italic", color: "#cc785c", marginRight: "14px" }}>
-            Pay & forget
-          </span>
-          <span>, your domain our responsibility.</span>
+          <span>Pay & forget,</span>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            fontSize: "58px",
+            fontWeight: 400,
+            letterSpacing: "-0.02em",
+            color: "#e8e0d2",
+            lineHeight: 1.2,
+            fontFamily: "Newsreader",
+          }}
+        >
+          <span>your domain our responsibility</span>
+          <span style={{ color: "#cc785c" }}>.</span>
         </div>
       </div>
 
       <div
         style={{
           display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
           width: "100%",
-          height: "1px",
-          backgroundColor: "rgba(230, 223, 216, 0.12)",
+          borderTop: "1px solid rgba(230, 223, 216, 0.12)",
+          paddingTop: "22px",
         }}
-      />
+      >
+        <span
+          style={{
+            fontSize: "16px",
+            fontWeight: 500,
+            color: "#a09d96",
+            letterSpacing: "0.06em",
+            fontFamily: "Inter",
+          }}
+        >
+          domains.prohor.dev
+        </span>
+      </div>
     </div>,
     {
       ...size,
